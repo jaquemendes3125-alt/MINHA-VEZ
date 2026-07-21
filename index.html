@@ -12,75 +12,42 @@
             display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
             padding: 15px 10px;
         }
-        .cabecalho { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
-        h1 {
-            font-size: 26px; color: #9B1C1C; text-align: center;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-        }
-        .seletor-idioma {
-            padding: 6px 10px; border: 2px solid #8B7355; border-radius: 4px;
-            background-color: #E8DCC3; font-size: 14px; cursor: pointer;
-        }
-        .botao-musica {
-            background-color: #8B7355; color: white; border: none; border-radius: 50%;
-            width: 40px; height: 40px; font-size: 18px; cursor: pointer; margin-bottom: 15px;
-        }
-        .moldura {
-            background-color: #C12026; padding: 18px; border-radius: 10px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3); margin-bottom: 15px;
-        }
-        .tabuleiro {
-            display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr);
-            gap: 8px; background-color: #A81A1F; padding: 10px; border-radius: 6px;
-            width: 320px; height: 320px;
-        }
-        .peca {
-            background-color: #FFF176; border: 2px solid #8B7355; border-radius: 4px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 32px; font-weight: bold; color: #212121; cursor: pointer;
-            user-select: none; transition: all 0.15s ease;
-            box-shadow: inset -2px -2px 4px rgba(0,0,0,0.15), inset 2px 2px 4px rgba(255,255,255,0.3);
-        }
-        .peca.vazia { background-color: #A81A1F; border: 2px dashed #8B161B; cursor: default; box-shadow: none; }
-        .lista-palavras {
-            background-color: #E8DCC3; padding: 12px; border-radius: 6px;
-            border: 2px solid #8B7355; width: 320px; text-align: center; margin-bottom: 15px;
-        }
-        .lista-palavras h3 { color: #3A2E2B; margin-bottom: 8px; font-size: 16px; }
-        .palavra { display: inline-block; margin: 4px 8px; font-size: 15px; color: #3A2E2B; }
-        .palavra.encontrada { text-decoration: line-through; color: #6D4C41; }
-        .botoes { display: flex; gap: 10px; margin-bottom: 15px; }
-        button {
-            padding: 10px 18px; background-color: #9B1C1C; color: white; border: none;
-            border-radius: 4px; font-size: 15px; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-        }
-        .mensagem { font-size: 17px; font-weight: bold; color: #2E7D32; text-align: center; margin-bottom: 15px; min-height: 24px; }
-        .anuncio {
-            width: 320px; height: 60px; background-color: #D4C7A9; border: 2px solid #8B7355;
-            border-radius: 3px; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; font-size: 14px; text-align: center; padding: 5px; margin-top: auto;
-        }
+        .topo { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; justify-content: center; }
+        h1 { font-size: 24px; color: #9B1C1C; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
+        .idioma { padding: 5px 8px; border: 2px solid #8B7355; border-radius: 4px; background: #E8DCC3; font-size: 13px; cursor: pointer; }
+        .btn-som { background: #8B7355; color: white; border: none; border-radius: 50%; width: 38px; height: 38px; font-size: 17px; cursor: pointer; }
+        .moldura { background: #C12026; padding: 16px; border-radius: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); margin: 12px 0; }
+        .tabuleiro { display: grid; grid-template-columns: repeat(4,1fr); grid-template-rows: repeat(4,1fr); gap: 7px; background: #A81A1F; padding: 10px; border-radius: 6px; width: 310px; height: 310px; }
+        .peca { background: #FFF176; border: 2px solid #8B7355; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: bold; color: #212121; cursor: pointer; user-select: none; transition: 0.15s; }
+        .peca.vazia { background: #A81A1F; border: 2px dashed #8B161B; cursor: default; }
+        .lista { background: #E8DCC3; padding: 10px; border-radius: 6px; border: 2px solid #8B7355; width: 310px; text-align: center; margin-bottom: 12px; }
+        .lista h3 { font-size: 15px; color: #3A2E2B; margin-bottom: 6px; }
+        .palavra { display: inline-block; margin: 3px 6px; font-size: 14px; color: #3A2E2B; }
+        .palavra.ok { text-decoration: line-through; color: #6D4C41; }
+        .botoes { display: flex; gap: 10px; margin-bottom: 12px; }
+        button { padding: 9px 16px; background: #9B1C1C; color: white; border: none; border-radius: 4px; font-size: 14px; cursor: pointer; }
+        .msg { font-size: 16px; font-weight: bold; color: #2E7D32; text-align: center; min-height: 22px; margin-bottom: 12px; }
+        .anuncio { width: 310px; height: 58px; background: #D4C7A9; border: 2px solid #8B7355; border-radius: 3px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 13px; text-align: center; padding: 5px; }
     </style>
 </head>
 <body>
-    <div class="cabecalho">
+    <div class="topo">
         <h1>✦ MINHA VEZ VINTAGE ✦</h1>
-        <select class="seletor-idioma" id="idioma" onchange="mudarIdioma()">
+        <select class="idioma" id="selIdioma" onchange="trocarIdioma()">
             <option value="pt">🇧🇷 PT</option>
             <option value="en">🇺🇸 EN</option>
             <option value="es">🇪🇸 ES</option>
         </select>
+        <button class="btn-som" id="btnSom" onclick="ligarSom()">🔇</button>
     </div>
-
-    <button class="botao-musica" id="btnMusica" onclick="alternarMusica()">🔇</button>
 
     <div class="moldura">
         <div class="tabuleiro" id="tabuleiro"></div>
     </div>
 
-    <div class="lista-palavras">
-        <h3 id="titulo-lista">Palavras para formar:</h3>
-        <div id="palavras-alvo"></div>
+    <div class="lista">
+        <h3 id="tituloLista">Palavras para formar:</h3>
+        <div id="palavras"></div>
     </div>
 
     <div class="botoes">
@@ -88,114 +55,104 @@
         <button id="btnVerificar" onclick="verificar()">✅ Verificar</button>
     </div>
 
-    <div class="mensagem" id="mensagem"></div>
+    <div class="msg" id="mensagem"></div>
 
-    <div class="anuncio" id="anuncio" onclick="abrirAnuncio()">
-        [ ESPAÇO DISPONÍVEL PARA ANÚNCIO ]
+    <div class="anuncio" id="areaAnuncio" onclick="abrirAnuncio()">
+        [ ESPAÇO PARA ANÚNCIO ]
     </div>
 
-    <!-- MÚSICA 100% LIVRE DE DIREITOS AUTORAIS -->
-    <audio id="musicaFundo" loop preload="metadata">
-        <source src="https://cdn.pixabay.com/download/audio/2022/10/25/audio_35b51a64c0.mp3" type="audio/mpeg">
-        Seu navegador não suporta áudio.
+    <!-- MÚSICA 100% LIVRE DE DIREITOS -->
+    <audio id="musica" loop preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/08/23/audio_170656.mp3" type="audio/mpeg">
     
 
     <script>
-        // --------------------------
-        // DAS TRADUÇÕES - VOCÊ PODE ALTERAR AQUI SE QUISER
-        // --------------------------
-        const TRADUCOES = {
+        // TRADUÇÕES E PALAVRAS POR IDIOMA
+        const TEXTOS = {
             pt: {
                 titulo: "✦ MINHA VEZ VINTAGE ✦",
-                listaPalavras: "Palavras para formar:",
+                lista: "Palavras para formar:",
                 embaralhar: "🔄 Embaralhar",
                 verificar: "✅ Verificar",
-                parabens: "🎉 PARABÉNS! Todas formadas!",
-                acertou: "Acertou {0} de {1}!",
+                parabens: "🎉 PARABÉNS! Todas encontradas!",
+                resultado: "Encontradas {0} de {1} palavras!",
                 anuncio: "[ ESPAÇO DISPONÍVEL PARA ANÚNCIO ]",
                 palavras: ["MATO", "ATAR", "CUCA", "AMO"]
             },
             en: {
                 titulo: "✦ MY TURN VINTAGE ✦",
-                listaPalavras: "Words to form:",
+                lista: "Words to find:",
                 embaralhar: "🔄 Shuffle",
                 verificar: "✅ Check",
                 parabens: "🎉 CONGRATULATIONS! All found!",
-                acertou: "Found {0} of {1}!",
+                resultado: "Found {0} of {1} words!",
                 anuncio: "[ AD SPACE AVAILABLE ]",
                 palavras: ["TREE", "BALL", "HOME", "LOVE"]
             },
             es: {
                 titulo: "✦ MI TURNO VINTAGE ✦",
-                listaPalavras: "Palabras para formar:",
+                lista: "Palabras a encontrar:",
                 embaralhar: "🔄 Mezclar",
                 verificar: "✅ Verificar",
-                parabens: "🎉 ¡FELICIDADES! ¡Todas formadas!",
-                acertou: "Encontraste {0} de {1}!",
+                parabens: "🎉 ¡FELICIDADES! ¡Todas encontradas!",
+                resultado: "Encontradas {0} de {1} palabras!",
                 anuncio: "[ ESPACIO PARA ANUNCIO ]",
                 palavras: ["MATA", "ATAR", "CASA", "AMOR"]
             }
         };
 
-        // --------------------------
         // ANÚNCIO
-        // --------------------------
-        const ANUNCIO = { texto: "ESPAÇO PARA SEU ANÚNCIO", link: "https://seulink.com.br" };
-        function abrirAnuncio() { if(ANUNCIO.link) window.open(ANUNCIO.link, '_blank'); }
+        const DADOS_ANUNCIO = { texto: "ESPAÇO PARA SEU ANÚNCIO", link: "https://seulink.com.br" };
+        document.getElementById('areaAnuncio').textContent = DADOS_ANUNCIO.texto;
+        function abrirAnuncio() { if(DADOS_ANUNCIO.link) window.open(DADOS_ANUNCIO.link, '_blank'); }
 
-        // --------------------------
-        // CONTROLE DA MÚSICA
-        // --------------------------
-        const musica = document.getElementById('musicaFundo');
-        const btnMusica = document.getElementById('btnMusica');
-        let musicaLigada = false;
-        function alternarMusica() {
-            if (!musicaLigada) {
-                musica.play().then(() => { btnMusica.textContent = "🔊"; musicaLigada = true; }).catch(() => alert("Clique novamente para ligar!"));
-            } else { musica.pause(); btnMusica.textContent = "🔇"; musicaLigada = false; }
+        // CONTROLE DE SOM
+        const som = document.getElementById('musica');
+        const botaoSom = document.getElementById('btnSom');
+        let somLigado = false;
+        function ligarSom() {
+            if(!somLigado) {
+                som.play().then(() => { botaoSom.textContent = "🔊"; somLigado = true; }).catch(() => alert("Clique novamente para ligar o som!"));
+            } else {
+                som.pause(); botaoSom.textContent = "🔇"; somLigado = false;
+            }
         }
 
-        // --------------------------
         // VARIÁVEIS DO JOGO
-        // --------------------------
         let idiomaAtual = "pt";
-        let PALAVRAS_ALVO = TRADUCOES.pt.palavras;
+        let listaPalavras = TEXTOS.pt.palavras;
         let pecas = [];
-        let indiceVazio = 15;
+        let espacoVazio = 15;
 
-        // --------------------------
         // TROCAR IDIOMA
-        // --------------------------
-        function mudarIdioma() {
-            idiomaAtual = document.getElementById('idioma').value;
-            const t = TRADUCOES[idiomaAtual];
-            document.querySelector('h1').textContent = t.titulo;
-            document.getElementById('titulo-lista').textContent = t.listaPalavras;
-            document.getElementById('btnEmbaralhar').textContent = t.embaralhar;
-            document.getElementById('btnVerificar').textContent = t.verificar;
-            document.getElementById('anuncio').textContent = t.anuncio;
-            PALAVRAS_ALVO = t.palavras;
-            iniciar();
+        function trocarIdioma() {
+            idiomaAtual = document.getElementById('selIdioma').value;
+            const txt = TEXTOS[idiomaAtual];
+            document.querySelector('h1').textContent = txt.titulo;
+            document.getElementById('tituloLista').textContent = txt.lista;
+            document.getElementById('btnEmbaralhar').textContent = txt.embaralhar;
+            document.getElementById('btnVerificar').textContent = txt.verificar;
+            document.getElementById('areaAnuncio').textContent = txt.anuncio;
+            listaPalavras = txt.palavras;
+            iniciarJogo();
         }
 
-        // --------------------------
         // INICIAR JOGO
-        // --------------------------
-        function iniciar() {
+        function iniciarJogo() {
             pecas = ["M","A","T","O","A","T","A","R","C","U","C","A","A","M","O",""];
             embaralhar();
             mostrarPalavras();
         }
 
         function mostrarPalavras() {
-            const lista = document.getElementById('palavras-alvo');
-            lista.innerHTML = "";
-            PALAVRAS_ALVO.forEach(p => {
+            const area = document.getElementById('palavras');
+            area.innerHTML = "";
+            listaPalavras.forEach(palavra => {
                 const el = document.createElement('span');
                 el.className = 'palavra';
-                el.textContent = p;
-                el.dataset.valor = p;
-                lista.appendChild(el);
+                el.textContent = palavra;
+                el.dataset.valor = palavra;
+                area.appendChild(el);
             });
         }
 
@@ -204,43 +161,42 @@
                 const j = Math.floor(Math.random() * (i + 1));
                 if (pecas[i] !== "" && pecas[j] !== "") {
                     [pecas[i], pecas[j]] = [pecas[j], pecas[i]];
-                    if (i === indiceVazio) indiceVazio = j;
-                    else if (j === indiceVazio) indiceVazio = i;
+                    if (i === espacoVazio) espacoVazio = j;
+                    else if (j === espacoVazio) espacoVazio = i;
                 }
             }
-            renderizarTabuleiro();
+            desenharTabuleiro();
             document.getElementById('mensagem').textContent = "";
-            document.querySelectorAll('.palavra').forEach(p => p.classList.remove('encontrada'));
+            document.querySelectorAll('.palavra').forEach(p => p.classList.remove('ok'));
         }
 
-        function renderizarTabuleiro() {
+        function desenharTabuleiro() {
             const tab = document.getElementById('tabuleiro');
             tab.innerHTML = "";
             pecas.forEach((letra, indice) => {
-                const div = document.createElement('div');
-                div.className = letra === "" ? "peca vazia" : "peca";
-                div.textContent = letra;
-                div.dataset.indice = indice;
-                if (letra !== "") div.addEventListener('click', () => moverPeca(indice));
-                tab.appendChild(div);
+                const quadro = document.createElement('div');
+                quadro.className = letra === "" ? "peca vazia" : "peca";
+                quadro.textContent = letra;
+                quadro.onclick = () => moverPeca(indice);
+                tab.appendChild(quadro);
             });
         }
 
         function moverPeca(indiceClicado) {
-            const vizinhos = [indiceVazio - 1, indiceVazio + 1, indiceVazio - 4, indiceVazio + 4];
+            const vizinhos = [espacoVazio -1, espacoVazio +1, espacoVazio -4, espacoVazio +4];
             const valido = vizinhos.includes(indiceClicado);
-            const mesmaLinha = Math.floor(indiceClicado / 4) === Math.floor(indiceVazio / 4);
+            const mesmaLinha = Math.floor(indiceClicado/4) === Math.floor(espacoVazio/4);
             if ((vizinhos[0] === indiceClicado && !mesmaLinha) || (vizinhos[1] === indiceClicado && !mesmaLinha)) return;
-            if (valido) {
-                pecas[indiceVazio] = pecas[indiceClicado];
+            if(valido) {
+                pecas[espacoVazio] = pecas[indiceClicado];
                 pecas[indiceClicado] = "";
-                indiceVazio = indiceClicado;
-                renderizarTabuleiro();
+                espacoVazio = indiceClicado;
+                desenharTabuleiro();
             }
         }
 
         function verificar() {
-            const t = TRADUCOES[idiomaAtual];
+            const txt = TEXTOS[idiomaAtual];
             const formadas = [
                 pecas[0]+pecas[1]+pecas[2]+pecas[3],
                 pecas[4]+pecas[5]+pecas[6]+pecas[7],
@@ -248,18 +204,18 @@
                 pecas[12]+pecas[13]+pecas[14]+pecas[15]
             ];
             let acertou = 0;
-            PALAVRAS_ALVO.forEach(palavra => {
-                if (formadas.includes(palavra)) {
+            listaPalavras.forEach(palavra => {
+                if(formadas.includes(palavra)) {
                     acertou++;
-                    document.querySelector(`.palavra[data-valor="${palavra}"]`).classList.add('encontrada');
+                    document.querySelector(`.palavra[data-valor="${palavra}"]`).classList.add('ok');
                 }
             });
-            document.getElementById('mensagem').textContent = acertou === PALAVRAS_ALVO.length 
-                ? t.parabens 
-                : t.acertou.replace("{0}", acertou).replace("{1}", PALAVRAS_ALVO.length);
+            document.getElementById('mensagem').textContent = acertou === listaPalavras.length 
+                ? txt.parabens 
+                : txt.resultado.replace("{0}", acertou).replace("{1}", listaPalavras.length);
         }
 
-        iniciar();
+        iniciarJogo();
     </script>
 </body>
 </html>
