@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>MINHA-VEZ Vintage</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Courier New", Courier, monospace; }
+        body {
+            background-color: #F4EBD0;
+            color: #3A2E2B;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px 10px;
+        }
+        h1 { font-size: 28px; text-align: center; margin-bottom: 15px; text-shadow: 1px 1px 0 #aaa; }
+        .status {
+            max-width: 420px;
+            width: 100%;
+            padding: 10px;
+            background-color: #E8DCC3;
+            border: 2px solid #8B7355;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 16px;
+        }
+        .tabuleiro {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            max-width: 420px;
+            width: 100%;
+            padding: 15px;
+            background-color: #E8DCC3;
+            border: 3px solid #8B7355;
+            border-radius: 4px;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+        .letra {
+            background-color: #FAF3E0;
+            border: 2px solid #8B7355;
+            border-radius: 3px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+        }
+        .letra.selecionada { background-color: #8F9779; color: white; }
+        .anuncio {
+            width: 100%;
+            max-width: 420px;
+            height: 60px;
+            background-color: #D4C7A9;
+            border: 2px solid #8B7355;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: auto;
+            cursor: pointer;
+            font-size: 14px;
+            text-align: center;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>✦ MINHA-VEZ VINTAGE ✦</h1>
+
+    <div class="status">
+        Palavras encontradas: <span id="contador">0</span> / <span id="total">10</span>
+    </div>
+
+    <div class="tabuleiro" id="tabuleiro"></div>
+
+    <div class="anuncio" id="anuncio" onclick="abrirAnuncio()">
+        [ ESPAÇO DISPONÍVEL PARA ANÚNCIO ]
+    </div>
+
+    <script>
+        // 🔹 LISTA COMPLETA DE PALAVRAS - TODAS NEUTRAS, SEM CONTEÚDO INDEVIDO
+        const TODAS_PALAVRAS = [
+            "CASA", "FLOR", "BOLO", "LUZ", "MAR", "CEU", "CHAO", "FRIO", "QUENTE", "AMOR",
+            "AGUA", "ARVORE", "CAMPO", "COLHEITA", "PLANTA", "SEMENTE", "SOL", "CHUVA", "TERRA", "VENTO",
+            "LIVRO", "MESA", "CADEIRA", "PORTA", "JANELA", "RUA", "CIDADE", "ESTADO", "PAIS", "MUNDO",
+            "PEIXE", "PASSARO", "CACHORRO", "GATO", "CAVALO", "VAQUEIRO", "FAZENDA", "ESTRELA", "LUAR", "NUVEM",
+            "TRIGO", "MILHO", "CAFE", "CANE", "SOJA", "FEIJAO", "ARROZ", "FRUTA", "VERDE", "MATO",
+            "ESCOLA", "AMIGO", "IRMAO", "MAE", "PAI", "FILHO", "AVO", "TIO", "PRIMO", "FAMILIA",
+            "DINHEIRO", "TRABALHO", "FERIAS", "SONHO", "ESPERANCA", "FORCA", "CORAGEM", "SORRISO", "BELEZA", "PAZ",
+            "PEDRA", "AREIA", "MONTANHA", "VALE", "RIO", "LAGO", "PONTE", "CAMINHO", "ESTRADA", "TRILHA",
+            "BOLA", "JOGO", "BRINCO", "CANTA", "DANCA", "LE", "ESCREVE", "CONTA", "DESENHA", "AJUDA",
+            "BRANCO", "PRETO", "AZUL", "VERMELHO", "VERDE", "AMARELO", "ROXO", "MARROM", "CINZA", "LARANJA"
+        ];
+
+        // 🔹 CONFIGURAÇÃO DO JOGO
+        let palavrasRodada = [...TODAS_PALAVRAS].sort(() => Math.random() - 0.5).slice(0, 10);
+        let encontradas = 0;
+        document.getElementById('total').textContent = palavrasRodada.length;
+
+        // 🔹 CONFIGURAÇÃO DO ANÚNCIO - ALTERE AQUI QUANDO QUISER
+        const ANUNCIO = {
+            texto: "Patrocinado: BuscaBoanerges",
+            link: "https://seusiteaqui.com.br"
+        };
+        document.getElementById('anuncio').textContent = ANUNCIO.texto;
+        function abrirAnuncio() { if(ANUNCIO.link) window.open(ANUNCIO.link, '_blank'); }
+
+        // 🔹 GERA O TABULEIRO AUTOMATICAMENTE
+        function gerarTabuleiro() {
+            const tabuleiro = document.getElementById('tabuleiro');
+            const letrasBase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            for(let i = 0; i < 49; i++) {
+                const quadro = document.createElement('div');
+                quadro.classList.add('letra');
+                quadro.textContent = letrasBase[Math.floor(Math.random() * letrasBase.length)];
+                tabuleiro.appendChild(quadro);
+            }
+        }
+
+        // 🔹 INICIA TUDO PRONTO
+        gerarTabuleiro();
+    </script>
+</body>
+</html>
