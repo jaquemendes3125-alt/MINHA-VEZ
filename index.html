@@ -1,62 +1,90 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>MINHA-VEZ Vintage</title>
+    <title>MINHA VEZ VINTAGE</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Courier New", Courier, monospace; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Arial Black", Gadget, sans-serif; }
         body {
             background-color: #F4EBD0;
-            color: #3A2E2B;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: flex-start;
             padding: 15px 10px;
         }
-        h1 { font-size: 28px; text-align: center; margin-bottom: 15px; text-shadow: 1px 1px 0 #aaa; }
-        .status {
-            max-width: 420px;
-            width: 100%;
-            padding: 10px;
-            background-color: #E8DCC3;
-            border: 2px solid #8B7355;
-            border-radius: 4px;
-            margin-bottom: 15px;
+        h1 {
+            font-size: 26px;
+            color: #9B1C1C;
             text-align: center;
-            font-size: 16px;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        .moldura {
+            background-color: #C12026;
+            padding: 18px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            margin-bottom: 15px;
         }
         .tabuleiro {
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 6px;
-            max-width: 420px;
-            width: 100%;
-            padding: 15px;
-            background-color: #E8DCC3;
-            border: 3px solid #8B7355;
-            border-radius: 4px;
-            box-shadow: inset 0 0 8px rgba(0,0,0,0.1);
-            margin-bottom: 15px;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 8px;
+            background-color: #A81A1F;
+            padding: 10px;
+            border-radius: 6px;
+            width: 320px;
+            height: 320px;
         }
-        .letra {
-            background-color: #FAF3E0;
+        .peca {
+            background-color: #FFF176;
             border: 2px solid #8B7355;
-            border-radius: 3px;
-            height: 45px;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
+            font-size: 32px;
             font-weight: bold;
+            color: #212121;
             cursor: pointer;
             user-select: none;
+            transition: all 0.15s ease;
+            box-shadow: inset -2px -2px 4px rgba(0,0,0,0.15), inset 2px 2px 4px rgba(255,255,255,0.3);
         }
-        .letra.selecionada { background-color: #8F9779; color: white; }
+        .peca.vazia { background-color: #A81A1F; border: 2px dashed #8B161B; cursor: default; box-shadow: none; }
+        .peca.selecionada { transform: scale(0.95); box-shadow: 0 0 10px #FFEB3B; }
+        .lista-palavras {
+            background-color: #E8DCC3;
+            padding: 12px;
+            border-radius: 6px;
+            border: 2px solid #8B7355;
+            width: 320px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .lista-palavras h3 { color: #3A2E2B; margin-bottom: 8px; font-size: 16px; }
+        .palavra { display: inline-block; margin: 4px 8px; font-size: 15px; color: #3A2E2B; }
+        .palavra.encontrada { text-decoration: line-through; color: #6D4C41; }
+        .botoes { display: flex; gap: 10px; margin-bottom: 15px; }
+        button {
+            padding: 10px 18px;
+            background-color: #9B1C1C;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            cursor: pointer;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+        }
+        button:hover { background-color: #7B1418; }
+        .mensagem { font-size: 17px; font-weight: bold; color: #2E7D32; text-align: center; margin-bottom: 15px; min-height: 24px; }
+        /* ESPAÇO DE ANÚNCIO MANTIDO PARA MONETIZAÇÃO */
         .anuncio {
-            width: 100%;
-            max-width: 420px;
+            width: 320px;
             height: 60px;
             background-color: #D4C7A9;
             border: 2px solid #8B7355;
@@ -64,69 +92,141 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: auto;
             cursor: pointer;
             font-size: 14px;
             text-align: center;
             padding: 5px;
+            margin-top: auto;
         }
     </style>
 </head>
 <body>
-    <h1>✦ MINHA-VEZ VINTAGE ✦</h1>
+    <h1>✦ MINHA VEZ VINTAGE ✦</h1>
 
-    <div class="status">
-        Palavras encontradas: <span id="contador">0</span> / <span id="total">10</span>
+    <div class="moldura">
+        <div class="tabuleiro" id="tabuleiro"></div>
     </div>
 
-    <div class="tabuleiro" id="tabuleiro"></div>
+    <div class="lista-palavras">
+        <h3>Palavras para formar:</h3>
+        <div id="palavras-alvo"></div>
+    </div>
 
+    <div class="botoes">
+        <button onclick="embaralhar()">🔄 Embaralhar</button>
+        <button onclick="verificar()">✅ Verificar</button>
+    </div>
+
+    <div class="mensagem" id="mensagem"></div>
+
+    <!-- ESPAÇO DE ANÚNCIO - NÃO ALTERADO, PRONTO PARA MONETIZAR -->
     <div class="anuncio" id="anuncio" onclick="abrirAnuncio()">
         [ ESPAÇO DISPONÍVEL PARA ANÚNCIO ]
     </div>
 
     <script>
-        // 🔹 LISTA COMPLETA DE PALAVRAS - TODAS NEUTRAS, SEM CONTEÚDO INDEVIDO
-        const TODAS_PALAVRAS = [
-            "CASA", "FLOR", "BOLO", "LUZ", "MAR", "CEU", "CHAO", "FRIO", "QUENTE", "AMOR",
-            "AGUA", "ARVORE", "CAMPO", "COLHEITA", "PLANTA", "SEMENTE", "SOL", "CHUVA", "TERRA", "VENTO",
-            "LIVRO", "MESA", "CADEIRA", "PORTA", "JANELA", "RUA", "CIDADE", "ESTADO", "PAIS", "MUNDO",
-            "PEIXE", "PASSARO", "CACHORRO", "GATO", "CAVALO", "VAQUEIRO", "FAZENDA", "ESTRELA", "LUAR", "NUVEM",
-            "TRIGO", "MILHO", "CAFE", "CANE", "SOJA", "FEIJAO", "ARROZ", "FRUTA", "VERDE", "MATO",
-            "ESCOLA", "AMIGO", "IRMAO", "MAE", "PAI", "FILHO", "AVO", "TIO", "PRIMO", "FAMILIA",
-            "DINHEIRO", "TRABALHO", "FERIAS", "SONHO", "ESPERANCA", "FORCA", "CORAGEM", "SORRISO", "BELEZA", "PAZ",
-            "PEDRA", "AREIA", "MONTANHA", "VALE", "RIO", "LAGO", "PONTE", "CAMINHO", "ESTRADA", "TRILHA",
-            "BOLA", "JOGO", "BRINCO", "CANTA", "DANCA", "LE", "ESCREVE", "CONTA", "DESENHA", "AJUDA",
-            "BRANCO", "PRETO", "AZUL", "VERMELHO", "VERDE", "AMARELO", "ROXO", "MARROM", "CINZA", "LARANJA"
-        ];
-
-        // 🔹 CONFIGURAÇÃO DO JOGO
-        let palavrasRodada = [...TODAS_PALAVRAS].sort(() => Math.random() - 0.5).slice(0, 10);
-        let encontradas = 0;
-        document.getElementById('total').textContent = palavrasRodada.length;
-
-        // 🔹 CONFIGURAÇÃO DO ANÚNCIO - ALTERE AQUI QUANDO QUISER
+        // CONFIGURAÇÃO DO ANÚNCIO - VOCÊ ALTERA AQUI QUANDO QUISER
         const ANUNCIO = {
-            texto: "Patrocinado: BuscaBoanerges",
-            link: "https://seusiteaqui.com.br"
+            texto: "ESPAÇO PARA SEU ANÚNCIO AQUI",
+            link: "https://seulink.com.br"
         };
         document.getElementById('anuncio').textContent = ANUNCIO.texto;
         function abrirAnuncio() { if(ANUNCIO.link) window.open(ANUNCIO.link, '_blank'); }
 
-        // 🔹 GERA O TABULEIRO AUTOMATICAMENTE
-        function gerarTabuleiro() {
-            const tabuleiro = document.getElementById('tabuleiro');
-            const letrasBase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            for(let i = 0; i < 49; i++) {
-                const quadro = document.createElement('div');
-                quadro.classList.add('letra');
-                quadro.textContent = letrasBase[Math.floor(Math.random() * letrasBase.length)];
-                tabuleiro.appendChild(quadro);
+        // LISTA DE PALAVRAS - PODE EDITAR SEM PROBLEMAS
+        const PALAVRAS_ALVO = ["MATO", "ATAR", "CUCA", "AMO"];
+        let pecas = [];
+        let indiceVazio = 15; // Espaço vazio no canto inferior direito, igual ao brinquedo
+
+        // INICIALIZAR JOGO
+        function iniciar() {
+            pecas = ["M","A","T","O","A","T","A","R","C","U","C","A","A","M","O",""];
+            embaralhar();
+            mostrarPalavras();
+        }
+
+        // MOSTRAR LISTA DE PALAVRAS
+        function mostrarPalavras() {
+            const lista = document.getElementById('palavras-alvo');
+            lista.innerHTML = "";
+            PALAVRAS_ALVO.forEach(p => {
+                const el = document.createElement('span');
+                el.className = 'palavra';
+                el.textContent = p;
+                el.dataset.valor = p;
+                lista.appendChild(el);
+            });
+        }
+
+        // EMBARALHAR PEÇAS
+        function embaralhar() {
+            for (let i = pecas.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                if (pecas[i] !== "" && pecas[j] !== "") {
+                    [pecas[i], pecas[j]] = [pecas[j], pecas[i]];
+                    if (i === indiceVazio) indiceVazio = j;
+                    else if (j === indiceVazio) indiceVazio = i;
+                }
+            }
+            renderizarTabuleiro();
+            document.getElementById('mensagem').textContent = "";
+            document.querySelectorAll('.palavra').forEach(p => p.classList.remove('encontrada'));
+        }
+
+        // DESENHAR O TABULEIRO NA TELA
+        function renderizarTabuleiro() {
+            const tab = document.getElementById('tabuleiro');
+            tab.innerHTML = "";
+            pecas.forEach((letra, indice) => {
+                const div = document.createElement('div');
+                div.className = letra === "" ? "peca vazia" : "peca";
+                div.textContent = letra;
+                div.dataset.indice = indice;
+                if (letra !== "") div.addEventListener('click', () => moverPeca(indice));
+                tab.appendChild(div);
+            });
+        }
+
+        // MOVER A PEÇA PARA O ESPAÇO VAZIO
+        function moverPeca(indiceClicado) {
+            const vizinhos = [indiceVazio - 1, indiceVazio + 1, indiceVazio - 4, indiceVazio + 4];
+            const valido = vizinhos.includes(indiceClicado);
+            const mesmaLinha = Math.floor(indiceClicado / 4) === Math.floor(indiceVazio / 4);
+            if ((vizinhos[0] === indiceClicado && !mesmaLinha) || (vizinhos[1] === indiceClicado && !mesmaLinha)) return;
+
+            if (valido) {
+                pecas[indiceVazio] = pecas[indiceClicado];
+                pecas[indiceClicado] = "";
+                indiceVazio = indiceClicado;
+                renderizarTabuleiro();
             }
         }
 
-        // 🔹 INICIA TUDO PRONTO
-        gerarTabuleiro();
+        // VERIFICAR SE TODAS AS PALAVRAS ESTÃO FORMAADAS
+        function verificar() {
+            const formadas = [
+                pecas[0]+pecas[1]+pecas[2]+pecas[3],
+                pecas[4]+pecas[5]+pecas[6]+pecas[7],
+                pecas[8]+pecas[9]+pecas[10]+pecas[11],
+                pecas[12]+pecas[13]+pecas[14]+pecas[15]
+            ];
+            let acertou = 0;
+            PALAVRAS_ALVO.forEach(palavra => {
+                if (formadas.includes(palavra)) {
+                    acertou++;
+                    document.querySelector(`.palavra[data-valor="${palavra}"]`).classList.add('encontrada');
+                }
+            });
+            const msg = document.getElementById('mensagem');
+            if (acertou === PALAVRAS_ALVO.length) {
+                msg.textContent = "🎉 PARABÉNS! Você formou todas as palavras!";
+            } else {
+                msg.textContent = `Você formou ${acertou} de ${PALAVRAS_ALVO.length} palavras!`;
+            }
+        }
+
+        // COMEÇAR O JOGO ASSIM QUE CARREGAR
+        iniciar();
     </script>
 </body>
 </html>
