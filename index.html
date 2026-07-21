@@ -61,14 +61,59 @@
         [ ESPAÇO DISPONÍVEL PARA ANÚNCIO ]
     </div>
 
-    <!-- MÚSICA 100% LIVRE, LEVE E CONFIÁVEL -->
-    <audio id="musica" loop preload="auto">
-        <source src="https://cdn.pixabay.com/download/audio/2024/02/16/audio_5f9b8c7d2e.mp3" type="audio/mpeg">
-        <source src="https://cdn.pixabay.com/download/audio/2023/09/28/audio_180b8d74e1.mp3" type="audio/mpeg">
-        Seu navegador não suporta áudio.
-    
-
     <script>
+        // --------------------------
+        // MÚSICA 8-BITS CRIADA DIRETAMENTE NO CÓDIGO — SEM BLOQUEIOS!
+        // --------------------------
+        let audioContexto;
+        let somLigado = false;
+        let botaoSom = document.getElementById('btnSom');
+        let notaAtual = 0;
+        let intervaloMusica;
+
+        // Sequência de notas estilo jogo antigo anos 80/90
+        const notas = [262, 294, 330, 262, 262, 294, 330, 262, 330, 349, 392, 330, 349, 392, 392, 440, 392, 349, 330, 262, 392, 440, 392, 349, 330, 262, 262, 196, 262, 262, 196, 262];
+
+        function tocarNota(frequencia) {
+            if (!audioContexto) return;
+            const osc = audioContexto.createOscillator();
+            const ganho = audioContexto.createGain();
+            osc.connect(ganho);
+            ganho.connect(audioContexto.destination);
+            osc.type = 'square'; // Som 8-bits autêntico
+            osc.frequency.value = frequencia;
+            ganho.gain.value = 0.15; // Volume suave
+            osc.start();
+            ganho.gain.exponentialRampToValueAtTime(0.01, audioContexto.currentTime + 0.3);
+            osc.stop(audioContexto.currentTime + 0.35);
+        }
+
+        function tocarMusica() {
+            if (!audioContexto) audioContexto = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioContexto.state === 'suspended') audioContexto.resume();
+            intervaloMusica = setInterval(() => {
+                tocarNota(notas[notaAtual]);
+                notaAtual++;
+                if (notaAtual >= notas.length) notaAtual = 0;
+            }, 350);
+        }
+
+        function pararMusica() {
+            clearInterval(intervaloMusica);
+        }
+
+        function ligarSom() {
+            if (!somLigado) {
+                tocarMusica();
+                botaoSom.textContent = "🔊";
+                somLigado = true;
+            } else {
+                pararMusica();
+                botaoSom.textContent = "🔇";
+                somLigado = false;
+            }
+        }
+
         // --------------------------
         // LISTA APENAS COM PALAVRAS DE 4 OU 5 LETRAS
         // --------------------------
@@ -83,7 +128,7 @@
                     resultado: "Encontradas {0} de {1} palavras!",
                     anuncio: "[ ESPAÇO DISPONÍVEL PARA ANÚNCIO ]"
                 },
-                palavras: ["MATO","ATAR","CUCA","AMO","CASA","FLOR","BOLO","LUZ","MAR","CÉU","CHÃO","FRIO","QUENTE","ÁGUA","ÁRVORE","CAMPO","PLANTA","SOL","CHUVA","TERRA","VENTO","LIVRO","MESA","PORTA","RUA","CIDADE","ESTADO","PAÍS","MUNDO","PEIXE","PÁSSARO","GATO","CAVALO","FAZENDA","ESTRELA","LUAR","NUVEM","TRIGO","MILHO","CAFÉ","CANE","SOJA","FEIJÃO","ARROZ","FRUTA","VERDE","ESCOLA","AMIGO","IRMÃO","MÃE","PAI","FILHO","AVÓ","TIO","PRIMO","FAMÍLIA","TRABALHO","FÉRIAS","SONHO","FORÇA","PAZ","PEDRA","AREIA","RIO","LAGO","PONTE","CAMINHO","ESTRADA","TRILHA","BOLA","JOGO","BRINCO","CANTA","DANÇA","CONTA","AJUDA","BRANCO","PRETO","AZUL","VERMELHO","ROXO","MARROM","CINZA","LARANJA"]
+                palavras: ["MATO","ATAR","CUCA","AMO","CASA","FLOR","BOLO","LUZ","MAR","CÉU","CHÃO","FRIO","QUENTE","ÁGUA","CAMPO","PLANTA","SOL","CHUVA","TERRA","VENTO","LIVRO","MESA","PORTA","RUA","CIDADE","ESTADO","PAÍS","MUNDO","PEIXE","PÁSSARO","GATO","CAVALO","FAZENDA","ESTRELA","LUAR","NUVEM","TRIGO","MILHO","CAFÉ","CANE","SOJA","FEIJÃO","ARROZ","FRUTA","VERDE","ESCOLA","AMIGO","IRMÃO","MÃE","PAI","FILHO","AVÓ","TIO","PRIMO","FAMÍLIA","TRABALHO","FÉRIAS","SONHO","FORÇA","PAZ","PEDRA","AREIA","RIO","LAGO","PONTE","CAMINHO","ESTRADA","TRILHA","BOLA","JOGO","BRINCO","CANTA","DANÇA","CONTA","AJUDA","BRANCO","PRETO","AZUL","VERMELHO","ROXO","MARROM","CINZA","LARANJA"]
             },
             en: {
                 textos: {
@@ -117,25 +162,6 @@
         const DADOS_ANUNCIO = { texto: "ESPAÇO PARA SEU ANÚNCIO", link: "https://seulink.com.br" };
         document.getElementById('areaAnuncio').textContent = DADOS_ANUNCIO.texto;
         function abrirAnuncio() { if(DADOS_ANUNCIO.link) window.open(DADOS_ANUNCIO.link, '_blank'); }
-
-        // --------------------------
-        // SOM CORRIGIDO COM DUAS OPÇÕES DE MÚSICA
-        // --------------------------
-        const som = document.getElementById('musica');
-        const botaoSom = document.getElementById('btnSom');
-        let somLigado = false;
-        som.volume = 0.4; // Bem suave
-        function ligarSom() {
-            if(!somLigado) {
-                som.play().then(() => { botaoSom.textContent = "🔊"; somLigado = true; }).catch(() => {
-                    alert("Clique mais uma vez para ligar! Se não tocar, atualize a página e tente novamente.");
-                });
-            } else {
-                som.pause();
-                botaoSom.textContent = "🔇";
-                somLigado = false;
-            }
-        }
 
         // --------------------------
         // VARIÁVEIS DO JOGO
