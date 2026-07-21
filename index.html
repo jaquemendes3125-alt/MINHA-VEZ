@@ -58,88 +58,123 @@
     <div class="msg" id="mensagem"></div>
 
     <div class="anuncio" id="areaAnuncio" onclick="abrirAnuncio()">
-        [ ESPAÇO PARA ANÚNCIO ]
+        [ ESPAÇO DISPONÍVEL PARA ANÚNCIO ]
     </div>
 
-    <!-- MÚSICA 100% LIVRE DE DIREITOS -->
+    <!-- MÚSICA 100% LIVRE DE DIREITOS - FONTE CONFIÁVEL -->
     <audio id="musica" loop preload="auto">
-        <source src="https://cdn.pixabay.com/download/audio/2022/08/23/audio_170656.mp3" type="audio/mpeg">
+        <source src="https://cdn.pixabay.com/download/audio/2023/01/04/audio_9274f7688a.mp3" type="audio/mpeg">
+        Seu navegador não suporta áudio.
     
 
     <script>
-        // TRADUÇÕES E PALAVRAS POR IDIOMA
-        const TEXTOS = {
+        // --------------------------
+        // LISTAS COM 100 PALAVRAS POR IDIOMA
+        // --------------------------
+        const LISTA_COMPLETA = {
             pt: {
-                titulo: "✦ MINHA VEZ VINTAGE ✦",
-                lista: "Palavras para formar:",
-                embaralhar: "🔄 Embaralhar",
-                verificar: "✅ Verificar",
-                parabens: "🎉 PARABÉNS! Todas encontradas!",
-                resultado: "Encontradas {0} de {1} palavras!",
-                anuncio: "[ ESPAÇO DISPONÍVEL PARA ANÚNCIO ]",
-                palavras: ["MATO", "ATAR", "CUCA", "AMO"]
+                textos: {
+                    titulo: "✦ MINHA VEZ VINTAGE ✦",
+                    lista: "Palavras para formar:",
+                    embaralhar: "🔄 Embaralhar",
+                    verificar: "✅ Verificar",
+                    parabens: "🎉 PARABÉNS! Todas encontradas! Vem mais 4 novas!",
+                    resultado: "Encontradas {0} de {1} palavras!",
+                    anuncio: "[ ESPAÇO DISPONÍVEL PARA ANÚNCIO ]"
+                },
+                palavras: ["MATO","ATAR","CUCA","AMO","CASA","FLOR","BOLO","LUZ","MAR","CÉU","CHÃO","FRIO","QUENTE","ÁGUA","ÁRVORE","CAMPO","COLHEITA","PLANTA","SEMENTE","SOL","CHUVA","TERRA","VENTO","LIVRO","MESA","CADEIRA","PORTA","JANELA","RUA","CIDADE","ESTADO","PAÍS","MUNDO","PEIXE","PÁSSARO","CACHORRO","GATO","CAVALO","FAZENDA","ESTRELA","LUAR","NUVEM","TRIGO","MILHO","CAFÉ","CANE","SOJA","FEIJÃO","ARROZ","FRUTA","VERDE","MATO","ESCOLA","AMIGO","IRMÃO","MÃE","PAI","FILHO","AVÓ","TIO","PRIMO","FAMÍLIA","DINHEIRO","TRABALHO","FÉRIAS","SONHO","ESPERANÇA","FORÇA","CORAGEM","SORRISO","BELEZA","PAZ","PEDRA","AREIA","MONTANHA","VALE","RIO","LAGO","PONTE","CAMINHO","ESTRADA","TRILHA","BOLA","JOGO","BRINCO","CANTA","DANÇA","LE","CONTA","DESENHA","AJUDA","BRANCO","PRETO","AZUL","VERMELHO","ROXO","MARROM","CINZA","LARANJA"]
             },
             en: {
-                titulo: "✦ MY TURN VINTAGE ✦",
-                lista: "Words to find:",
-                embaralhar: "🔄 Shuffle",
-                verificar: "✅ Check",
-                parabens: "🎉 CONGRATULATIONS! All found!",
-                resultado: "Found {0} of {1} words!",
-                anuncio: "[ AD SPACE AVAILABLE ]",
-                palavras: ["TREE", "BALL", "HOME", "LOVE"]
+                textos: {
+                    titulo: "✦ MY TURN VINTAGE ✦",
+                    lista: "Words to find:",
+                    embaralhar: "🔄 Shuffle",
+                    verificar: "✅ Check",
+                    parabens: "🎉 CONGRATULATIONS! All found! 4 new ones coming!",
+                    resultado: "Found {0} of {1} words!",
+                    anuncio: "[ AD SPACE AVAILABLE ]"
+                },
+                palavras: ["TREE","BALL","HOME","LOVE","HOUSE","FLOWER","CAKE","LIGHT","SEA","SKY","GROUND","COLD","HOT","WATER","WOOD","FIELD","HARVEST","PLANT","SEED","SUN","RAIN","EARTH","WIND","BOOK","TABLE","CHAIR","DOOR","WINDOW","STREET","CITY","STATE","COUNTRY","WORLD","FISH","BIRD","DOG","CAT","HORSE","FARM","STAR","MOON","CLOUD","WHEAT","CORN","COFFEE","SUGAR","BEAN","RICE","FRUIT","GREEN","WOODS","SCHOOL","FRIEND","BROTHER","MOTHER","FATHER","SON","GRANDMA","UNCLE","COUSIN","FAMILY","MONEY","WORK","HOLIDAY","DREAM","HOPE","STRENGTH","BRAVERY","SMILE","BEAUTY","PEACE","STONE","SAND","MOUNTAIN","VALLEY","RIVER","LAKE","BRIDGE","PATH","ROAD","TRAIL","PLAY","GAME","SING","DANCE","READ","COUNT","DRAW","HELP","WHITE","BLACK","BLUE","RED","PURPLE","BROWN","GRAY","ORANGE"]
             },
             es: {
-                titulo: "✦ MI TURNO VINTAGE ✦",
-                lista: "Palabras a encontrar:",
-                embaralhar: "🔄 Mezclar",
-                verificar: "✅ Verificar",
-                parabens: "🎉 ¡FELICIDADES! ¡Todas encontradas!",
-                resultado: "Encontradas {0} de {1} palabras!",
-                anuncio: "[ ESPACIO PARA ANUNCIO ]",
-                palavras: ["MATA", "ATAR", "CASA", "AMOR"]
+                textos: {
+                    titulo: "✦ MI TURNO VINTAGE ✦",
+                    lista: "Palabras a encontrar:",
+                    embaralhar: "🔄 Mezclar",
+                    verificar: "✅ Verificar",
+                    parabens: "🎉 ¡FELICIDADES! ¡Todas encontradas! ¡Vienen 4 nuevas!",
+                    resultado: "Encontradas {0} de {1} palabras!",
+                    anuncio: "[ ESPACIO PARA ANUNCIO ]"
+                },
+                palavras: ["MATA","ATAR","CASA","AMOR","FLOR","PAN","LUZ","MAR","CIELO","SUELO","FRÍO","CALOR","AGUA","ÁRBOL","CAMPO","COSECHA","PLANTA","SEMILLA","SOL","LLUVIA","TIERRA","VIENTO","LIBRO","MESA","SILLA","PUERTA","VENTANA","CALLE","CIUDAD","ESTADO","PAÍS","MUNDO","PEZ","PÁJARO","PERRO","GATO","CABALLO","GRANJA","ESTRELLA","LUNA","NUBE","TRIGO","MAÍZ","CAFÉ","CAÑA","SOJA","FRIJOL","ARROZ","FRUTA","VERDE","BOSQUE","ESCUELA","AMIGO","HERMANO","MADRE","PADRE","HIJO","ABUELA","TÍO","PRIMO","FAMILIA","DINERO","TRABAJO","VACACIONES","SUEÑO","ESPERANZA","FUERZA","VALOR","SONRISA","BELLEZA","PAZ","PIEDRA","ARENA","MONTAÑA","VALLE","RÍO","LAGO","PUENTE","CAMINO","CARRETERA","SENDER","JUEGO","CANTA","BAILA","LEE","CUENTA","DIBUJA","AYUDA","BLANCO","NEGRO","AZUL","ROJO","MORADO","MARRÓN","GRIS","NARANJA"]
             }
         };
 
+        // --------------------------
         // ANÚNCIO
+        // --------------------------
         const DADOS_ANUNCIO = { texto: "ESPAÇO PARA SEU ANÚNCIO", link: "https://seulink.com.br" };
         document.getElementById('areaAnuncio').textContent = DADOS_ANUNCIO.texto;
         function abrirAnuncio() { if(DADOS_ANUNCIO.link) window.open(DADOS_ANUNCIO.link, '_blank'); }
 
-        // CONTROLE DE SOM
+        // --------------------------
+        // CONTROLE DE SOM CORRIGIDO
+        // --------------------------
         const som = document.getElementById('musica');
         const botaoSom = document.getElementById('btnSom');
         let somLigado = false;
+        som.volume = 0.5; // Volume suave, não incomoda
         function ligarSom() {
             if(!somLigado) {
-                som.play().then(() => { botaoSom.textContent = "🔊"; somLigado = true; }).catch(() => alert("Clique novamente para ligar o som!"));
+                som.play().then(() => { botaoSom.textContent = "🔊"; somLigado = true; }).catch(() => {
+                    alert("Clique mais uma vez para ligar a música!");
+                });
             } else {
-                som.pause(); botaoSom.textContent = "🔇"; somLigado = false;
+                som.pause();
+                botaoSom.textContent = "🔇";
+                somLigado = false;
             }
         }
 
+        // --------------------------
         // VARIÁVEIS DO JOGO
+        // --------------------------
         let idiomaAtual = "pt";
-        let listaPalavras = TEXTOS.pt.palavras;
+        let listaPalavras = [];
         let pecas = [];
         let espacoVazio = 15;
 
+        // --------------------------
+        // PEGAR 4 NOVAS PALAVRAS DA LISTA GRANDE
+        // --------------------------
+        function pegarNovasPalavras() {
+            const todas = LISTA_COMPLETA[idiomaAtual].palavras;
+            const embaralhado = [...todas].sort(() => Math.random() - 0.5);
+            return embaralhado.slice(0,4);
+        }
+
+        // --------------------------
         // TROCAR IDIOMA
+        // --------------------------
         function trocarIdioma() {
             idiomaAtual = document.getElementById('selIdioma').value;
-            const txt = TEXTOS[idiomaAtual];
+            const txt = LISTA_COMPLETA[idiomaAtual].textos;
             document.querySelector('h1').textContent = txt.titulo;
             document.getElementById('tituloLista').textContent = txt.lista;
             document.getElementById('btnEmbaralhar').textContent = txt.embaralhar;
             document.getElementById('btnVerificar').textContent = txt.verificar;
             document.getElementById('areaAnuncio').textContent = txt.anuncio;
-            listaPalavras = txt.palavras;
             iniciarJogo();
         }
 
-        // INICIAR JOGO
+        // --------------------------
+        // INICIAR JOGO COM NOVAS PALAVRAS
+        // --------------------------
         function iniciarJogo() {
-            pecas = ["M","A","T","O","A","T","A","R","C","U","C","A","A","M","O",""];
+            listaPalavras = pegarNovasPalavras();
+            pecas = [];
+            listaPalavras.forEach(p => pecas.push(...p.split('')));
+            pecas.push(""); // Espaço vazio
             embaralhar();
             mostrarPalavras();
         }
@@ -165,6 +200,7 @@
                     else if (j === espacoVazio) espacoVazio = i;
                 }
             }
+            espacoVazio = pecas.indexOf("");
             desenharTabuleiro();
             document.getElementById('mensagem').textContent = "";
             document.querySelectorAll('.palavra').forEach(p => p.classList.remove('ok'));
@@ -196,7 +232,7 @@
         }
 
         function verificar() {
-            const txt = TEXTOS[idiomaAtual];
+            const txt = LISTA_COMPLETA[idiomaAtual].textos;
             const formadas = [
                 pecas[0]+pecas[1]+pecas[2]+pecas[3],
                 pecas[4]+pecas[5]+pecas[6]+pecas[7],
@@ -210,9 +246,14 @@
                     document.querySelector(`.palavra[data-valor="${palavra}"]`).classList.add('ok');
                 }
             });
-            document.getElementById('mensagem').textContent = acertou === listaPalavras.length 
-                ? txt.parabens 
-                : txt.resultado.replace("{0}", acertou).replace("{1}", listaPalavras.length);
+
+            if(acertou === listaPalavras.length) {
+                document.getElementById('mensagem').textContent = txt.parabens;
+                // Espera 2 segundos e carrega NOVAS palavras
+                setTimeout(() => iniciarJogo(), 2000);
+            } else {
+                document.getElementById('mensagem').textContent = txt.resultado.replace("{0}", acertou).replace("{1}", listaPalavras.length);
+            }
         }
 
         iniciarJogo();
