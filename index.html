@@ -19,8 +19,19 @@
             font-size: 26px;
             color: #9B1C1C;
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        .botao-musica {
+            background-color: #8B7355;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-bottom: 15px;
         }
         .moldura {
             background-color: #C12026;
@@ -56,7 +67,6 @@
             box-shadow: inset -2px -2px 4px rgba(0,0,0,0.15), inset 2px 2px 4px rgba(255,255,255,0.3);
         }
         .peca.vazia { background-color: #A81A1F; border: 2px dashed #8B161B; cursor: default; box-shadow: none; }
-        .peca.selecionada { transform: scale(0.95); box-shadow: 0 0 10px #FFEB3B; }
         .lista-palavras {
             background-color: #E8DCC3;
             padding: 12px;
@@ -80,9 +90,7 @@
             cursor: pointer;
             box-shadow: 0 3px 6px rgba(0,0,0,0.2);
         }
-        button:hover { background-color: #7B1418; }
         .mensagem { font-size: 17px; font-weight: bold; color: #2E7D32; text-align: center; margin-bottom: 15px; min-height: 24px; }
-        /* ESPAÇO DE ANÚNCIO MANTIDO PARA MONETIZAÇÃO */
         .anuncio {
             width: 320px;
             height: 60px;
@@ -103,6 +111,8 @@
 <body>
     <h1>✦ MINHA VEZ VINTAGE ✦</h1>
 
+    <button class="botao-musica" id="btnMusica" onclick="alternarMusica()">🔊</button>
+
     <div class="moldura">
         <div class="tabuleiro" id="tabuleiro"></div>
     </div>
@@ -119,33 +129,43 @@
 
     <div class="mensagem" id="mensagem"></div>
 
-    <!-- ESPAÇO DE ANÚNCIO - NÃO ALTERADO, PRONTO PARA MONETIZAR -->
     <div class="anuncio" id="anuncio" onclick="abrirAnuncio()">
         [ ESPAÇO DISPONÍVEL PARA ANÚNCIO ]
     </div>
 
+    <!-- MÚSICA 100% LIVRE DE DIREITOS AUTORAIS - ESTILO 8 BITS ANOS 80/90 -->
+    <audio id="musicaFundo" loop preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3" type="audio/mpeg">
+    
+
     <script>
-        // CONFIGURAÇÃO DO ANÚNCIO - VOCÊ ALTERA AQUI QUANDO QUISER
-        const ANUNCIO = {
-            texto: "ESPAÇO PARA SEU ANÚNCIO AQUI",
-            link: "https://seulink.com.br"
-        };
+        // ANÚNCIO
+        const ANUNCIO = { texto: "ESPAÇO PARA SEU ANÚNCIO", link: "https://seulink.com.br" };
         document.getElementById('anuncio').textContent = ANUNCIO.texto;
         function abrirAnuncio() { if(ANUNCIO.link) window.open(ANUNCIO.link, '_blank'); }
 
-        // LISTA DE PALAVRAS - PODE EDITAR SEM PROBLEMAS
+        // CONTROLE DA MÚSICA
+        const musica = document.getElementById('musicaFundo');
+        const btnMusica = document.getElementById('btnMusica');
+        let musicaLigada = false;
+
+        function alternarMusica() {
+            if (musicaLigada) { musica.pause(); btnMusica.textContent = "🔇"; }
+            else { musica.play().catch(()=>{}); btnMusica.textContent = "🔊"; }
+            musicaLigada = !musicaLigada;
+        }
+
+        // JOGO
         const PALAVRAS_ALVO = ["MATO", "ATAR", "CUCA", "AMO"];
         let pecas = [];
-        let indiceVazio = 15; // Espaço vazio no canto inferior direito, igual ao brinquedo
+        let indiceVazio = 15;
 
-        // INICIALIZAR JOGO
         function iniciar() {
             pecas = ["M","A","T","O","A","T","A","R","C","U","C","A","A","M","O",""];
             embaralhar();
             mostrarPalavras();
         }
 
-        // MOSTRAR LISTA DE PALAVRAS
         function mostrarPalavras() {
             const lista = document.getElementById('palavras-alvo');
             lista.innerHTML = "";
@@ -158,7 +178,6 @@
             });
         }
 
-        // EMBARALHAR PEÇAS
         function embaralhar() {
             for (let i = pecas.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -173,7 +192,6 @@
             document.querySelectorAll('.palavra').forEach(p => p.classList.remove('encontrada'));
         }
 
-        // DESENHAR O TABULEIRO NA TELA
         function renderizarTabuleiro() {
             const tab = document.getElementById('tabuleiro');
             tab.innerHTML = "";
@@ -187,13 +205,11 @@
             });
         }
 
-        // MOVER A PEÇA PARA O ESPAÇO VAZIO
         function moverPeca(indiceClicado) {
             const vizinhos = [indiceVazio - 1, indiceVazio + 1, indiceVazio - 4, indiceVazio + 4];
             const valido = vizinhos.includes(indiceClicado);
             const mesmaLinha = Math.floor(indiceClicado / 4) === Math.floor(indiceVazio / 4);
             if ((vizinhos[0] === indiceClicado && !mesmaLinha) || (vizinhos[1] === indiceClicado && !mesmaLinha)) return;
-
             if (valido) {
                 pecas[indiceVazio] = pecas[indiceClicado];
                 pecas[indiceClicado] = "";
@@ -202,7 +218,6 @@
             }
         }
 
-        // VERIFICAR SE TODAS AS PALAVRAS ESTÃO FORMAADAS
         function verificar() {
             const formadas = [
                 pecas[0]+pecas[1]+pecas[2]+pecas[3],
@@ -218,14 +233,11 @@
                 }
             });
             const msg = document.getElementById('mensagem');
-            if (acertou === PALAVRAS_ALVO.length) {
-                msg.textContent = "🎉 PARABÉNS! Você formou todas as palavras!";
-            } else {
-                msg.textContent = `Você formou ${acertou} de ${PALAVRAS_ALVO.length} palavras!`;
-            }
+            msg.textContent = acertou === PALAVRAS_ALVO.length 
+                ? "🎉 PARABÉNS! Todas formadas!" 
+                : `Acertou ${acertou} de ${PALAVRAS_ALVO.length}!`;
         }
 
-        // COMEÇAR O JOGO ASSIM QUE CARREGAR
         iniciar();
     </script>
 </body>
