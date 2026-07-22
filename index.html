@@ -43,17 +43,17 @@
         select { background-color: #FFE97F; color: #660000; }
         button { background-color: #9B0000; color: #FFE97F; border: none; }
 
-        /* TABULEIRO SEM NENHUM SOMBREAMENTO, COMO UM QUADRO LIMPO */
+        /* TABULEIRO: BASE UM POUCO MAIOR, QUADRADOS MAIS PRÓXIMOS, SEM SOMBRA */
         .tabuleiro {
             background-color: #9B0000;
             border: 6px solid #660000;
             border-radius: 12px;
-            padding: 22px;
+            padding: 18px 18px 24px 18px;
             box-shadow: none;
             display: grid;
             grid-template-columns: repeat(4, 70px);
             grid-template-rows: repeat(4, 70px);
-            gap: 10px;
+            gap: 6px;
             margin-bottom: 20px;
         }
 
@@ -171,7 +171,64 @@
         let pecas = [];
         let palavrasRodada = [];
         let idiomaAtual = "pt";
+        let loopMusica;
+        let notaMusica = 0;
         const TOTAL = 16;
+
+        // Melodia estilo jogo antigo anos 80/90
+        const melodia = [262, 294, 330, 262, 330, 392, 294, 262, 330, 262, 220, 262, 294, 196, 262];
+
+        function iniciarAudio() {
+            if(!audioContexto) audioContexto = new (window.AudioContext || window.webkitAudioContext)();
+            if(audioContexto.state === 'suspended') audioContexto.resume();
+        }
+
+        function tocarNotaMusica(freq, duracao = 0.3) {
+            if(!audioContexto || !somAtivo) return;
+            const osc = audioContexto.createOscillator();
+            const vol = audioContexto.createGain();
+            osc.connect(vol); vol.connect(audioContexto.destination);
+            osc.type = 'square'; osc.frequency.value = freq;
+            vol.gain.value = 0.08; osc.start();
+            vol.gain.exponentialRampToValueAtTime(0.01, audioContexto.currentTime + duracao);
+            osc.stop(audioContexto.currentTime + duracao + 0.05);
+        }
+
+        function tocarSomMovimento() {
+            if(!audioContexto || !somAtivo) return;
+            const n = audioContexto.createOscillator();
+            const v = audioContexto.createGain();
+            n.connect(v); v.connect(audioContexto.destination);
+            n.frequency.value = 520; n.type = "square"; v.gain.value = 0.12;
+            n.start(); n.stop(audioContexto.currentTime + 0.15);
+        }
+
+        function ligarMusica() {
+            iniciarAudio();
+            pararMusica();
+            loopMusica = setInterval(() => {
+                tocarNotaMusica(melodia[notaMusica]);
+                notaMusica++;
+                if(notaMusica >= melodia.length) notaMusica = 0;
+            }, 320);
+        }
+
+        function pararMusica() {
+            clearInterval(loopMusica);
+        }
+
+        function alternarSom() {
+            iniciarAudio();
+            somAtivo = !somAtivo;
+            document.getElementById("botaoSom").textContent = somAtivo ? "🔊 Som" : "🔇 Som";
+            if(somAtivo) ligarMusica();
+            else pararMusica();
+        }
+
+        function trocarIdioma() {
+            idiomaAtual = document.getElementById("idioma").value;
+            embaralharENovas();
+        }
 
         const BANCO = {
             pt: { res: "Encontradas {0} de 3 palavras!", lista: ["CASA", "FLOR", "BOLO", "LUZ", "MAR", "CÉU", "CHÃO", "FRIO", "ÁGUA", "SOL", "LUA", "RIO", "PAZ", "MÃE", "PAI", "VIDA", "DIA", "NOITE", "AZUL", "ROSA", "JOGO", "LIVRO", "MESA", "PORTA", "RUA", "GATO", "CÃO", "PEIXE", "SIM", "NÃO", "BOM", "RUIM", "VERDE", "FESTA"] },
@@ -179,27 +236,12 @@
             es: { res: "Encontradas {0} de 3 palabras!", lista: ["CASA", "FLOR", "PAN", "LUZ", "MAR", "CIELO", "FRÍO", "CALOR", "AGUA", "SOL", "LUNA", "RÍO", "PAZ", "MAMÁ", "PAPÁ", "VIDA", "DÍA", "NOCHE", "AZUL", "ROSA", "JUEGO", "LIBRO", "MESA", "PUERTA", "CIUDAD", "GATO", "PERRO", "PEZ", "SÍ", "NO", "YA", "MAS", "PERO", "POR"] }
         };
 
-        function tocarSom() {
-            if(!audioContexto) audioContexto = new (window.AudioContext || window.webkitAudioContext)();
-            const n = audioContexto.createOscillator();
-            const v = audioContexto.createGain();
-            n.connect(v); v.connect(audioContexto.destination);
-            n.frequency.value = 520; n.type = "square"; v.gain.value = 0.1;
-            n.start(); n.stop(audioContexto.currentTime + 0.15);
-        }
-        function alternarSom() {
-            somAtivo = !somAtivo;
-            document.getElementById("botaoSom").textContent = somAtivo ? "🔊 Som" : "🔇 Som";
-        }
-        function trocarIdioma() {
-            idiomaAtual = document.getElementById("idioma").value;
-            embaralharENovas();
-        }
         function pegarPalavras() {
             let t = [...BANCO[idiomaAtual].lista], s = [];
             for(let i=0;i<3;i++) s.push(t.splice(Math.floor(Math.random()*t.length),1)[0]);
             return s;
         }
+
         function desenhar() {
             const tab = document.getElementById("tabuleiroJogo");
             tab.innerHTML = "";
@@ -211,13 +253,15 @@
                 tab.appendChild(d);
             });
         }
+
         function mover(i) {
             const v = [espacoVazio-1, espacoVazio+1, espacoVazio-4, espacoVazio+4];
             if(!v.includes(i)) return;
-            if(somAtivo) tocarSom();
+            if(somAtivo) tocarSomMovimento();
             pecas[espacoVazio] = pecas[i]; pecas[i] = ""; espacoVazio = i;
             desenhar();
         }
+
         function mostrarPalavras() {
             const l = document.getElementById("listaPalavras"); l.innerHTML = "";
             palavrasRodada.forEach(p=>{
@@ -226,6 +270,7 @@
                 l.appendChild(s);
             });
         }
+
         function embaralharPecas() {
             for(let i=pecas.length-1;i>0;i--) {
                 const j = Math.floor(Math.random()*(i+1));
@@ -233,6 +278,7 @@
             }
             espacoVazio = pecas.indexOf(""); desenhar();
         }
+
         function embaralharENovas() {
             palavrasRodada = pegarPalavras();
             pecas = []; palavrasRodada.forEach(p=>pecas.push(...p.split("")));
@@ -241,6 +287,7 @@
             pecas.push(""); embaralharPecas(); mostrarPalavras();
             document.getElementById("aviso").textContent = "";
         }
+
         function verificar() {
             const lins = [pecas[0]+pecas[1]+pecas[2]+pecas[3], pecas[4]+pecas[5]+pecas[6]+pecas[7], pecas[8]+pecas[9]+pecas[10]+pecas[11], pecas[12]+pecas[13]+pecas[14]+pecas[15]];
             const cols = [pecas[0]+pecas[4]+pecas[8]+pecas[12], pecas[1]+pecas[5]+pecas[9]+pecas[13], pecas[2]+pecas[6]+pecas[10]+pecas[14], pecas[3]+pecas[7]+pecas[11]+pecas[15]];
