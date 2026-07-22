@@ -14,15 +14,14 @@
             align-items: center;
             padding: 15px 10px;
         }
-        /* TÍTULO BEM NO TOPO, CENTRALIZADO */
+        /* TÍTULO AGORA MAIOR, BEM DESTACADO */
         h1 {
-            font-size: 22px;
+            font-size: 26px;
             color: #9B1C1C;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
             text-align: center;
             margin-bottom: 12px;
         }
-        /* LINHA ABAIXO DO TÍTULO: IDIOMA + SOM */
         .linha-opcoes {
             display: flex;
             align-items: center;
@@ -145,10 +144,8 @@
     </style>
 </head>
 <body>
-    <!-- TÍTULO BEM NO TOPO -->
     <h1>✦ MINHA-VEZ VINTAGE ✦</h1>
 
-    <!-- LINHA COM IDIOMA E SOM -->
     <div class="linha-opcoes">
         <select class="idioma" id="selIdioma" onchange="trocarIdioma()">
             <option value="pt">🇧🇷 PT</option>
@@ -180,7 +177,7 @@
 
     <script>
         // --------------------------
-        // SONS: MÚSICA DE FUNDO + BARULHINHO AO MOVER
+        // SONS
         // --------------------------
         let audioCtx;
         let somLigado = false;
@@ -233,7 +230,7 @@
         }
 
         // --------------------------
-        // RESTO DO JOGO
+        // LISTA DE PALAVRAS
         // --------------------------
         const LISTA_COMPLETA = {
             pt: {
@@ -362,15 +359,24 @@
 
         function verificar() {
             const txt = LISTA_COMPLETA[idiomaAtual].textos;
-            const formadas = [
+            // ACEITA PALAVRAS NAS 4 LINHAS E 4 COLUNAS, NORMAL OU AO CONTRÁRIO
+            const linhas = [
                 pecas[0]+pecas[1]+pecas[2]+pecas[3],
                 pecas[4]+pecas[5]+pecas[6]+pecas[7],
                 pecas[8]+pecas[9]+pecas[10]+pecas[11],
                 pecas[12]+pecas[13]+pecas[14]+pecas[15]
             ];
+            const colunas = [
+                pecas[0]+pecas[4]+pecas[8]+pecas[12],
+                pecas[1]+pecas[5]+pecas[9]+pecas[13],
+                pecas[2]+pecas[6]+pecas[10]+pecas[14],
+                pecas[3]+pecas[7]+pecas[11]+pecas[15]
+            ];
+            const todasFormadas = [...linhas, ...colunas, ...linhas.map(p => p.split('').reverse().join('')), ...colunas.map(p => p.split('').reverse().join(''))];
+
             let acertou = 0;
             listaPalavras.forEach(palavra => {
-                if(formadas.includes(palavra)) {
+                if(todasFormadas.includes(palavra)) {
                     acertou++;
                     document.querySelector(`.palavra[data-valor="${palavra}"]`).classList.add('ok');
                 }
@@ -378,9 +384,10 @@
 
             if(acertou === listaPalavras.length) {
                 document.getElementById('mensagem').textContent = txt.parabens;
+                // TROCA AUTOMÁTICA POR NOVAS PALAVRAS!
                 setTimeout(() => iniciarJogo(), 2500);
             } else {
-                document.getElementById('mensagem').textContent = txt.resultado.replace("{0}", acertou).replace("{1}", txt.resultado.split("de")[1]);
+                document.getElementById('mensagem').textContent = txt.resultado.replace("{0}", acertou).replace("{1}", listaPalavras.length);
             }
         }
 
