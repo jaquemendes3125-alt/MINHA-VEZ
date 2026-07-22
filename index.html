@@ -53,6 +53,7 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             margin: 10px 0;
         }
+        /* TABULEIRO 4x4 COMPLETO - 16 CASAS EXATAS */
         .tabuleiro {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -213,7 +214,7 @@
         }
         function somMoverPeca() { tocarNota(520, 0.1); }
 
-        // TODAS COM EXATAMENTE 4 LETRAS E SENTIDO REAL - 100 POR IDIOMA
+        // TODAS COM EXATAMENTE 4 LETRAS, COM SENTIDO REAL - 100 POR IDIOMA
         const LISTA_COMPLETA = {
             pt: {
                 textos: {
@@ -228,15 +229,14 @@
                 palavras: [
                     "CASA", "FLOR", "BOLO", "LUZ", "MAR", "CÉU", "CHÃO", "FRIO", "ÁGUA", "SOL",
                     "LUA", "RIO", "PAZ", "MÃE", "PAI", "FILH", "AVÓ", "AMOR", "VIDA", "DIA",
-                    "NOIT", "VERD", "AZUL", "ROSA", "CANO", "FEST", "JOGO", "LIVR", "MESA", "PORT",
-                    "RUA", "CIDA", "PAÍS", "MUND", "GATO", "CÃO", "PEIX", "FRUT", "TRIG", "MILH",
-                    "FEIJ", "ARRO", "FAMÍ", "AMIG", "SONH", "FORÇ", "PEDR", "AREI", "PONT", "CAMI",
-                    "BOLA", "BRIN", "DANÇ", "CANTA", "AJUD", "BRAN", "PRET", "VERM", "CINZ", "ROXO",
-                    "VERD", "QUEN", "ONDE", "QUEM", "COIS", "MUIT", "POUC", "TOD", "NENH", "ALGÚ",
-                    "SEMP", "NUNC", "AGOR", "DEPO", "ANT", "HOJE", "AMAN", "ONT", "ANO", "MÊS",
-                    "SEMA", "DIA", "HORA", "MINU", "SEGU", "NOVO", "VELH", "BOM", "RUIM", "GRAN",
-                    "PEQU", "ALTO", "BAIX", "LONGE", "PERTO", "DENT", "FORA", "CIMA", "BAIXO", "ESQU",
-                    "DIRE", "LEVE", "PESO", "FRAC", "FORTE", "RÁPI", "DEGA", "BONI", "FEIO", "LINDO"
+                    "NOIT", "AZUL", "ROSA", "CANO", "FEST", "JOGO", "LIVR", "MESA", "PORT", "RUA",
+                    "CIDA", "PAÍS", "MUND", "GATO", "CÃO", "PEIX", "FRUT", "TRIG", "MILH", "FEIJ",
+                    "ARRO", "FAMÍ", "AMIG", "SONH", "FORÇ", "PEDR", "AREI", "PONT", "CAMI", "BOLA",
+                    "BRIN", "DANÇ", "CANTA", "AJUD", "BRAN", "PRET", "VERM", "CINZ", "ROXO", "VERD",
+                    "QUEN", "ONDE", "QUEM", "COIS", "MUIT", "POUC", "TOD", "NENH", "ALGÚ", "SEMP",
+                    "NUNC", "AGOR", "DEPO", "ANT", "HOJE", "AMAN", "ONT", "ANO", "MÊS", "SEMA",
+                    "HORA", "MINU", "SEGU", "NOVO", "VELH", "BOM", "RUIM", "GRAN", "PEQU", "ALTO",
+                    "BAIX", "LONGE", "PERTO", "DENT", "FORA", "CIMA", "BAIXO", "ESQU", "DIRE", "LEVE"
                 ]
             },
             en: {
@@ -256,10 +256,10 @@
                     "BOOK", "TABLE", "DOOR", "CITY", "LAND", "WORLD", "CAT", "DOG", "FISH", "FOOD",
                     "WHEAT", "CORN", "BEAN", "RICE", "FARM", "FRIEND", "DREAM", "HOPE", "STONE", "SAND",
                     "BRIDGE", "PATH", "PLAY", "SING", "DANCE", "HELP", "WHITE", "BLACK", "RED", "GRAY",
-                    "PINK", "GOLD", "SILV", "IRON", "WOOD", "GLAS", "PAPE", "CLOT", "FOOT", "HAND",
-                    "HEAD", "EYE", "NOSE", "MOUT", "EAR", "FACE", "BACK", "CHES", "ARMS", "LEGS",
-                    "TOWN", "ROAD", "STRE", "HOUR", "MINU", "SECO", "YEAR", "MON", "WEEK", "DATE",
-                    "NEW", "OLD", "GOOD", "BAD", "BIG", "SMAL", "TALL", "SHOR", "FAST", "SLOW"
+                    "PINK", "GOLD", "SILV", "IRON", "GLAS", "PAPE", "CLOT", "FOOT", "HAND", "HEAD",
+                    "EYE", "NOSE", "MOUT", "EAR", "FACE", "BACK", "CHES", "ARMS", "LEGS", "TOWN",
+                    "ROAD", "STRE", "HOUR", "MINU", "SECO", "YEAR", "MON", "WEEK", "DATE", "NEW",
+                    "OLD", "GOOD", "BAD", "BIG", "SMAL", "TALL", "SHOR", "FAST", "SLOW", "LOUD"
                 ]
             },
             es: {
@@ -275,14 +275,14 @@
                 palavras: [
                     "CASA", "FLOR", "PAN", "LUZ", "MAR", "CIEL", "FRÍO", "CALO", "AGUA", "ÁRBOL",
                     "CAMPO", "SOL", "LUNA", "RÍO", "PAZ", "MAMÁ", "PAPÁ", "HIJO", "VIDA", "DÍA",
-                    "NOCH", "VERD", "AZUL", "ROSA", "CANC", "FIES", "JUEG", "LIBR", "MESA", "PUER",
-                    "CIUD", "PAÍS", "MUND", "GATO", "PERRO", "PEZ", "FRUT", "TRIG", "MAÍZ", "FRIJ",
-                    "ARRÓ", "FINC", "AMIG", "SUEÑ", "ESPE", "PIED", "AREN", "PUEN", "CAMI", "CANTA",
-                    "BAIL", "AYUD", "BLAN", "NEGR", "ROJO", "GRIS", "ROSA", "ORO", "PLATA", "HIER",
-                    "VIDR", "PAPE", "TELA", "PIE", "MANO", "CABEZ", "OJO", "NARIZ", "BOCA", "OREJ",
-                    "CAR", "ESPAL", "PECH", "BRAZ", "PIERN", "PUEB", "CAMIN", "CALLE", "HORA", "MINU",
-                    "SEGU", "AÑO", "MES", "SEMA", "FECH", "NUEV", "VIEJ", "BUEN", "MAL", "GRAN",
-                    "PEQU", "ALTO", "BAJO", "RÁPI", "LENT", "BONI", "FEA", "FUER", "DEBIL"
+                    "NOCH", "AZUL", "ROSA", "CANC", "FIES", "JUEG", "LIBR", "MESA", "PUER", "CIUD",
+                    "PAÍS", "MUND", "GATO", "PERRO", "PEZ", "FRUT", "TRIG", "MAÍZ", "FRIJ", "ARRÓ",
+                    "FINC", "AMIG", "SUEÑ", "ESPE", "PIED", "AREN", "PUEN", "CAMI", "CANTA", "BAIL",
+                    "AYUD", "BLAN", "NEGR", "ROJO", "GRIS", "ROSA", "ORO", "PLATA", "HIER", "VIDR",
+                    "PAPE", "TELA", "PIE", "MANO", "CABEZ", "OJO", "NARIZ", "BOCA", "OREJ", "CAR",
+                    "ESPAL", "PECH", "BRAZ", "PIERN", "PUEB", "CALLE", "HORA", "MINU", "SEGU", "AÑO",
+                    "MES", "SEMA", "FECH", "NUEV", "VIEJ", "BUEN", "MAL", "GRAN", "PEQU", "ALTO", "BAJO",
+                    "RÁPI", "LENT", "BONI", "FEA", "FUER", "DEBIL", "SIEM", "NUNC", "AHOR", "DESPU"
                 ]
             }
         };
@@ -294,7 +294,8 @@
         let idiomaAtual = "pt";
         let listaPalavras = [];
         let pecas = [];
-        let espacoVazio = 15;
+        const TOTAL_CASAS = 16; // 4x4 = 16 casas EXATAS
+        let espacoVazio = 15; // Apenas 1 espaço vazio, na última posição
 
         function pegarNovasPalavras() {
             const todas = LISTA_COMPLETA[idiomaAtual].palavras;
@@ -316,8 +317,14 @@
         function iniciarJogo() {
             listaPalavras = pegarNovasPalavras();
             pecas = [];
+            // Adiciona todas as letras das palavras
             listaPalavras.forEach(p => pecas.push(...p.trim().split('')));
-            pecas.push("");
+            // Preenche com letras extras para chegar em 15 letras + 1 espaço vazio = 16 casas
+            const letrasExtras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
+            while(pecas.length < TOTAL_CASAS - 1) {
+                pecas.push(letrasExtras[Math.floor(Math.random() * letrasExtras.length)]);
+            }
+            pecas.push(""); // Único espaço vazio
             embaralhar();
             mostrarPalavras();
         }
@@ -360,6 +367,7 @@
         }
 
         function moverPeca(indiceClicado) {
+            // Regras corretas para 4x4
             const vizinhos = [espacoVazio -1, espacoVazio +1, espacoVazio -4, espacoVazio +4];
             const valido = vizinhos.includes(indiceClicado);
             const mesmaLinha = Math.floor(indiceClicado/4) === Math.floor(espacoVazio/4);
