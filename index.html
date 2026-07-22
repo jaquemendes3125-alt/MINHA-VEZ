@@ -7,200 +7,145 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Courier New', Courier, monospace;
             background-color: #F4EBD0;
-            background-image: radial-gradient(#D4A373 8%, transparent 8%);
-            background-position: 0 0;
-            background-size: 20px 20px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 25px 15px;
-            position: relative;
+            padding: 20px 15px;
+            font-family: Arial, sans-serif;
         }
-        /* Estrelas decorativas nos cantos */
-        body::before, body::after, .topo-esq, .topo-dir, .base-esq, .base-dir {
-            content: "★";
-            position: absolute;
-            color: #9B1C1C;
-            font-size: 24px;
-            font-weight: bold;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-        }
-        body::before { top: 15px; left: 15px; }
-        body::after { top: 15px; right: 15px; }
-        .base-esq { bottom: 15px; left: 15px; }
-        .base-dir { bottom: 15px; right: 15px; }
 
+        /* TÍTULO COM DUAS ESTRELINHAS, EXATAMENTE COMO VOCÊ DISSE */
         h1 {
-            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
-            color: #9B1C1C;
-            font-size: 32px;
+            color: #9B0000;
+            font-size: 30px;
+            font-weight: bold;
             text-align: center;
-            margin-bottom: 20px;
-            letter-spacing: 3px;
-            text-shadow: 2px 2px 0px #D4A373;
-            border-bottom: 3px double #8B7355;
-            padding-bottom: 8px;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
         }
-        .controles-topo {
+        h1::before { content: "✦ "; }
+        h1::after { content: " ✦"; }
+
+        .topo-controles {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             margin-bottom: 20px;
-            align-items: center;
-            background-color: rgba(255,241,118,0.6);
-            padding: 10px 20px;
-            border-radius: 8px;
-            border: 2px solid #8B7355;
         }
         select, button {
-            font-family: 'Trebuchet MS', Helvetica, sans-serif;
-            padding: 10px 15px;
-            font-size: 16px;
-            border-radius: 6px;
-            border: 3px solid #6B3227;
+            padding: 8px 12px;
+            font-size: 15px;
+            border-radius: 4px;
+            border: 2px solid #660000;
             cursor: pointer;
-            transition: all 0.2s ease;
             font-weight: bold;
         }
-        select {
-            background-color: #FFF176;
-            color: #6B3227;
-        }
-        button {
-            background-color: #9B1C1C;
-            color: #FFF176;
-            border: none;
-            box-shadow: 3px 3px 0px #6B3227;
-        }
-        button:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0px #6B3227; }
-        button:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0px #6B3227; }
+        select { background-color: #FFE97F; color: #660000; }
+        button { background-color: #9B0000; color: #FFE97F; border: none; }
 
+        /* TABULEIRO IGUAL AO BRINQUEDO RACHA-CUCA: VERMELHO, BORDA GROSSA, CAIXAS AMARELAS */
         .tabuleiro {
-            display: grid;
-            grid-template-columns: repeat(4, 75px);
-            grid-template-rows: repeat(4, 75px);
-            gap: 10px;
-            background-color: #A81A1F;
-            padding: 20px;
+            background-color: #9B0000;
+            border: 6px solid #660000;
             border-radius: 12px;
-            border: 5px solid #6B3227;
-            box-shadow: 5px 5px 0px #8B7355, inset 0 0 15px rgba(0,0,0,0.2);
-            margin: 20px 0;
+            padding: 22px;
+            box-shadow: 6px 6px 12px rgba(0,0,0,0.35);
+            display: grid;
+            grid-template-columns: repeat(4, 70px);
+            grid-template-rows: repeat(4, 70px);
+            gap: 10px;
+            margin-bottom: 20px;
         }
+
         .peca {
-            background-color: #FFF176;
+            background-color: #FFE97F;
+            border: 3px solid #CC9900;
+            border-radius: 6px;
+            box-shadow: inset 2px 2px 5px rgba(255,255,255,0.7), 2px 2px 4px rgba(0,0,0,0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Impact', Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: 36px;
-            font-weight: normal;
-            color: #6B3227;
-            border-radius: 8px;
-            border: 3px solid #8B7355;
+            font-family: 'Arial Black', sans-serif;
+            font-size: 34px;
+            color: #000000;
+            font-weight: 900;
             cursor: pointer;
             user-select: none;
-            box-shadow: inset 2px 2px 4px rgba(255,255,255,0.6), 2px 2px 3px rgba(0,0,0,0.15);
-            transition: transform 0.1s;
         }
-        .peca:hover { transform: scale(1.03); }
         .peca.vazia {
-            background-color: #A81A1F;
-            border: 3px dashed #D4A373;
-            cursor: default;
+            background-color: #9B0000;
+            border: 3px dashed #FFE97F;
             box-shadow: none;
-            transform: none;
+            cursor: default;
         }
 
+        /* LISTA DE PALAVRAS BEM ACABADINHA */
         .lista-palavras {
             background-color: #E8DCC3;
-            padding: 20px;
-            border-radius: 10px;
-            border: 4px solid #8B7355;
-            width: 360px;
+            border: 3px solid #8B7355;
+            border-radius: 8px;
+            padding: 18px;
+            width: 330px;
             text-align: center;
-            margin-bottom: 20px;
-            box-shadow: 3px 3px 0px #6B3227;
-            position: relative;
+            margin-bottom: 18px;
+            box-shadow: 3px 3px 6px rgba(0,0,0,0.2);
         }
-        .lista-palavras::before, .lista-palavras::after {
-            content: "✦";
-            position: absolute;
-            color: #9B1C1C;
-            font-size: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-        .lista-palavras::before { left: 15px; }
-        .lista-palavras::after { right: 15px; }
         .lista-palavras h3 {
-            font-family: 'Palatino Linotype', serif;
-            font-size: 20px;
-            margin-bottom: 15px;
-            color: #6B3227;
-            text-decoration: underline double;
+            font-size: 18px;
+            color: #660000;
+            margin-bottom: 12px;
+            font-weight: bold;
         }
         .palavra {
-            font-family: 'Comic Sans MS', cursive;
-            margin: 8px 15px;
-            font-size: 20px;
-            display: inline-block;
-            color: #6B3227;
+            font-size: 19px;
             font-weight: bold;
+            color: #660000;
+            margin: 0 10px;
+            display: inline-block;
         }
         .palavra.ok {
             text-decoration: line-through;
-            color: #2E7D32;
-            font-weight: bolder;
+            color: #006600;
         }
 
-        .botoes-acao {
+        .botoes {
             display: flex;
-            gap: 20px;
-            margin-bottom: 15px;
+            gap: 15px;
+            margin-bottom: 12px;
         }
         .mensagem {
-            font-family: 'Trebuchet MS', sans-serif;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: bold;
-            color: #2E7D32;
-            margin: 15px 0;
-            min-height: 28px;
+            color: #006600;
+            min-height: 26px;
             text-align: center;
-            text-shadow: 1px 1px 0px rgba(255,255,255,0.8);
+            margin-bottom: 15px;
         }
 
-        .area-anuncio {
-            width: 360px;
-            height: 70px;
+        .anuncio {
+            width: 330px;
+            height: 65px;
             background-color: #D4C7A9;
-            border: 4px solid #8B7355;
-            border-radius: 8px;
+            border: 3px solid #8B7355;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 15px;
-            font-size: 16px;
-            color: #6B3227;
             font-weight: bold;
-            font-family: 'Courier New', monospace;
-            box-shadow: 3px 3px 0px #6B3227;
+            color: #660000;
         }
     </style>
 </head>
 <body>
-    <div class="base-esq"></div>
-    <div class="base-dir"></div>
 
-    <h1>✦ MINHA-VEZ VINTAGE ✦</h1>
+    <h1>MINHA-VEZ VINTAGE</h1>
 
-    <div class="controles-topo">
-        <select id="idiomaEscolhido" onchange="trocarIdioma()">
-            <option value="pt">🇧🇷 Português</option>
-            <option value="en">🇺🇸 Inglês</option>
-            <option value="es">🇪🇸 Espanhol</option>
+    <div class="topo-controles">
+        <select id="idioma" onchange="trocarIdioma()">
+            <option value="pt">Português</option>
+            <option value="en">Inglês</option>
+            <option value="es">Espanhol</option>
         </select>
         <button id="botaoSom" onclick="alternarSom()">🔇 Som</button>
     </div>
@@ -209,165 +154,111 @@
 
     <div class="lista-palavras">
         <h3>Palavras para formar:</h3>
-        <div id="listaPalavrasJogo"></div>
+        <div id="listaPalavras"></div>
     </div>
 
-    <div class="botoes-acao">
-        <button onclick="embaralharENovasPalavras()">🔄 Embaralhar & Novas Palavras</button>
-        <button onclick="verificarPalavras()">✅ Verificar</button>
+    <div class="botoes">
+        <button onclick="embaralharENovas()">🔄 Embaralhar & Novas Palavras</button>
+        <button onclick="verificar()">✅ Verificar</button>
     </div>
 
     <div class="mensagem" id="aviso"></div>
 
-    <div class="area-anuncio">
-        ✦ ESPAÇO PARA ANÚNCIOS ✦
-    </div>
+    <div class="anuncio">✦ ESPAÇO PARA ANÚNCIOS ✦</div>
 
     <script>
         let somAtivo = false;
         let audioContexto;
         let espacoVazio = 15;
-        let pecasJogo = [];
+        let pecas = [];
         let palavrasRodada = [];
         let idiomaAtual = "pt";
-        const TOTAL_CASAS = 16;
+        const TOTAL = 16;
 
-        const BANCO_PALAVRAS = {
-            pt: {
-                resultado: "Encontradas {0} de 3 palavras!",
-                lista: ["CASA", "FLOR", "BOLO", "LUZ", "MAR", "CÉU", "CHÃO", "FRIO", "ÁGUA", "SOL", "LUA", "RIO", "PAZ", "MÃE", "PAI", "VIDA", "DIA", "NOITE", "AZUL", "ROSA", "JOGO", "LIVRO", "MESA", "PORTA", "RUA", "GATO", "CÃO", "PEIXE", "SIM", "NÃO", "BOM", "RUIM", "VERDE", "FESTA"]
-            },
-            en: {
-                resultado: "Found {0} of 3 words!",
-                lista: ["TREE", "BALL", "HOME", "LOVE", "CAKE", "SEA", "SKY", "COLD", "HOT", "SUN", "MOON", "ROAD", "PEACE", "MOM", "DAD", "LIFE", "DAY", "NIGHT", "BLUE", "ROSE", "GAME", "BOOK", "TABLE", "DOOR", "CITY", "CAT", "DOG", "FISH", "YES", "NO", "NEW", "OLD", "BIG", "RED"]
-            },
-            es: {
-                resultado: "Encontradas {0} de 3 palabras!",
-                lista: ["CASA", "FLOR", "PAN", "LUZ", "MAR", "CIELO", "FRÍO", "CALOR", "AGUA", "SOL", "LUNA", "RÍO", "PAZ", "MAMÁ", "PAPÁ", "VIDA", "DÍA", "NOCHE", "AZUL", "ROSA", "JUEGO", "LIBRO", "MESA", "PUERTA", "CIUDAD", "GATO", "PERRO", "PEZ", "SÍ", "NO", "YA", "MAS", "PERO", "POR"]
-            }
+        const BANCO = {
+            pt: { res: "Encontradas {0} de 3 palavras!", lista: ["CASA", "FLOR", "BOLO", "LUZ", "MAR", "CÉU", "CHÃO", "FRIO", "ÁGUA", "SOL", "LUA", "RIO", "PAZ", "MÃE", "PAI", "VIDA", "DIA", "NOITE", "AZUL", "ROSA", "JOGO", "LIVRO", "MESA", "PORTA", "RUA", "GATO", "CÃO", "PEIXE", "SIM", "NÃO", "BOM", "RUIM", "VERDE", "FESTA"] },
+            en: { res: "Found {0} of 3 words!", lista: ["TREE", "BALL", "HOME", "LOVE", "CAKE", "SEA", "SKY", "COLD", "HOT", "SUN", "MOON", "ROAD", "PEACE", "MOM", "DAD", "LIFE", "DAY", "NIGHT", "BLUE", "ROSE", "GAME", "BOOK", "TABLE", "DOOR", "CITY", "CAT", "DOG", "FISH", "YES", "NO", "NEW", "OLD", "BIG", "RED"] },
+            es: { res: "Encontradas {0} de 3 palabras!", lista: ["CASA", "FLOR", "PAN", "LUZ", "MAR", "CIELO", "FRÍO", "CALOR", "AGUA", "SOL", "LUNA", "RÍO", "PAZ", "MAMÁ", "PAPÁ", "VIDA", "DÍA", "NOCHE", "AZUL", "ROSA", "JUEGO", "LIBRO", "MESA", "PUERTA", "CIUDAD", "GATO", "PERRO", "PEZ", "SÍ", "NO", "YA", "MAS", "PERO", "POR"] }
         };
 
-        function tocarSomMovimento() {
+        function tocarSom() {
             if(!audioContexto) audioContexto = new (window.AudioContext || window.webkitAudioContext)();
-            const nota = audioContexto.createOscillator();
-            const volume = audioContexto.createGain();
-            nota.connect(volume);
-            volume.connect(audioContexto.destination);
-            nota.frequency.value = 520;
-            nota.type = "square";
-            volume.gain.value = 0.1;
-            nota.start();
-            nota.stop(audioContexto.currentTime + 0.15);
+            const n = audioContexto.createOscillator();
+            const v = audioContexto.createGain();
+            n.connect(v); v.connect(audioContexto.destination);
+            n.frequency.value = 520; n.type = "square"; v.gain.value = 0.1;
+            n.start(); n.stop(audioContexto.currentTime + 0.15);
         }
-
         function alternarSom() {
             somAtivo = !somAtivo;
             document.getElementById("botaoSom").textContent = somAtivo ? "🔊 Som" : "🔇 Som";
         }
-
         function trocarIdioma() {
-            idiomaAtual = document.getElementById("idiomaEscolhido").value;
-            embaralharENovasPalavras();
+            idiomaAtual = document.getElementById("idioma").value;
+            embaralharENovas();
         }
-
-        function sortearPalavrasNovas() {
-            const todas = [...BANCO_PALAVRAS[idiomaAtual].lista];
-            const selecionadas = [];
-            for(let i=0; i<3; i++) {
-                const indice = Math.floor(Math.random() * todas.length);
-                selecionadas.push(todas.splice(indice, 1)[0]);
-            }
-            return selecionadas;
+        function pegarPalavras() {
+            let t = [...BANCO[idiomaAtual].lista], s = [];
+            for(let i=0;i<3;i++) s.push(t.splice(Math.floor(Math.random()*t.length),1)[0]);
+            return s;
         }
-
+        function desenhar() {
+            const tab = document.getElementById("tabuleiroJogo");
+            tab.innerHTML = "";
+            pecas.forEach((l,i)=>{
+                const d = document.createElement("div");
+                d.className = l==""?"peca vazia":"peca";
+                d.textContent = l;
+                d.onclick = ()=>mover(i);
+                tab.appendChild(d);
+            });
+        }
+        function mover(i) {
+            const v = [espacoVazio-1, espacoVazio+1, espacoVazio-4, espacoVazio+4];
+            if(!v.includes(i)) return;
+            if(somAtivo) tocarSom();
+            pecas[espacoVazio] = pecas[i]; pecas[i] = ""; espacoVazio = i;
+            desenhar();
+        }
+        function mostrarPalavras() {
+            const l = document.getElementById("listaPalavras"); l.innerHTML = "";
+            palavrasRodada.forEach(p=>{
+                const s = document.createElement("span");
+                s.className = "palavra"; s.textContent = p; s.dataset.val = p;
+                l.appendChild(s);
+            });
+        }
         function embaralharPecas() {
-            for(let i=pecasJogo.length-1; i>0; i--) {
-                const j = Math.floor(Math.random() * (i+1));
-                if(pecasJogo[i] !== "" && pecasJogo[j] !== "") [pecasJogo[i], pecasJogo[j]] = [pecasJogo[j], pecasJogo[i]];
+            for(let i=pecas.length-1;i>0;i--) {
+                const j = Math.floor(Math.random()*(i+1));
+                if(pecas[i]!="" && pecas[j]!="") [pecas[i], pecas[j]] = [pecas[j], pecas[i]];
             }
-            espacoVazio = pecasJogo.indexOf("");
-            desenharTabuleiro();
+            espacoVazio = pecas.indexOf(""); desenhar();
         }
-
-        function desenharTabuleiro() {
-            const tabuleiro = document.getElementById("tabuleiroJogo");
-            tabuleiro.innerHTML = "";
-            pecasJogo.forEach((letra, indice) => {
-                const quadro = document.createElement("div");
-                quadro.className = letra === "" ? "peca vazia" : "peca";
-                quadro.textContent = letra;
-                quadro.onclick = () => moverPeca(indice);
-                tabuleiro.appendChild(quadro);
-            });
-        }
-
-        function moverPeca(indice) {
-            const vizinhos = [espacoVazio -1, espacoVazio +1, espacoVazio -4, espacoVazio +4];
-            if(!vizinhos.includes(indice)) return;
-            if(somAtivo) tocarSomMovimento();
-            pecasJogo[espacoVazio] = pecasJogo[indice];
-            pecasJogo[indice] = "";
-            espacoVazio = indice;
-            desenharTabuleiro();
-        }
-
-        function mostrarPalavrasNaTela() {
-            const lista = document.getElementById("listaPalavrasJogo");
-            lista.innerHTML = "";
-            palavrasRodada.forEach(p => {
-                const item = document.createElement("span");
-                item.className = "palavra";
-                item.textContent = p;
-                item.dataset.valor = p;
-                lista.appendChild(item);
-            });
-        }
-
-        function embaralharENovasPalavras() {
-            palavrasRodada = sortearPalavrasNovas();
-            pecasJogo = [];
-            palavrasRodada.forEach(p => pecasJogo.push(...p.split('')));
-            const letrasExtras = "ABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚÂÊÔÃÕÇ";
-            while(pecasJogo.length < TOTAL_CASAS - 1) {
-                pecasJogo.push(letrasExtras[Math.floor(Math.random() * letrasExtras.length)]);
-            }
-            pecasJogo.push("");
-            embaralharPecas();
-            mostrarPalavrasNaTela();
+        function embaralharENovas() {
+            palavrasRodada = pegarPalavras();
+            pecas = []; palavrasRodada.forEach(p=>pecas.push(...p.split("")));
+            const extras = "ABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚÂÊÔÃÕÇ";
+            while(pecas.length < TOTAL-1) pecas.push(extras[Math.floor(Math.random()*extras.length)]);
+            pecas.push(""); embaralharPecas(); mostrarPalavras();
             document.getElementById("aviso").textContent = "";
         }
-
-        function verificarPalavras() {
-            const linhas = [
-                pecasJogo[0]+pecasJogo[1]+pecasJogo[2]+pecasJogo[3],
-                pecasJogo[4]+pecasJogo[5]+pecasJogo[6]+pecasJogo[7],
-                pecasJogo[8]+pecasJogo[9]+pecasJogo[10]+pecasJogo[11],
-                pecasJogo[12]+pecasJogo[13]+pecasJogo[14]+pecasJogo[15]
-            ];
-            const colunas = [
-                pecasJogo[0]+pecasJogo[4]+pecasJogo[8]+pecasJogo[12],
-                pecasJogo[1]+pecasJogo[5]+pecasJogo[9]+pecasJogo[13],
-                pecasJogo[2]+pecasJogo[6]+pecasJogo[10]+pecasJogo[14],
-                pecasJogo[3]+pecasJogo[7]+pecasJogo[11]+pecasJogo[15]
-            ];
-            const todasFormadas = [
-                ...linhas, ...colunas,
-                ...linhas.map(l => l.split('').reverse().join('')),
-                ...colunas.map(c => c.split('').reverse().join(''))
-            ];
-
+        function verificar() {
+            const lins = [pecas[0]+pecas[1]+pecas[2]+pecas[3], pecas[4]+pecas[5]+pecas[6]+pecas[7], pecas[8]+pecas[9]+pecas[10]+pecas[11], pecas[12]+pecas[13]+pecas[14]+pecas[15]];
+            const cols = [pecas[0]+pecas[4]+pecas[8]+pecas[12], pecas[1]+pecas[5]+pecas[9]+pecas[13], pecas[2]+pecas[6]+pecas[10]+pecas[14], pecas[3]+pecas[7]+pecas[11]+pecas[15]];
+            const todas = [...lins, ...cols, ...lins.map(x=>x.split("").reverse().join("")), ...cols.map(x=>x.split("").reverse().join(""))];
             let acertou = 0;
-            palavrasRodada.forEach(palavra => {
-                if(todasFormadas.includes(palavra)) {
+            palavrasRodada.forEach(p=>{
+                if(todas.includes(p)) {
                     acertou++;
-                    document.querySelector(`[data-valor="${palavra}"]`).classList.add("ok");
+                    document.querySelector(`[data-val="${p}"]`).classList.add("ok");
                 }
             });
-
-            document.getElementById("aviso").textContent = BANCO_PALAVRAS[idiomaAtual].resultado.replace("{0}", acertou);
+            document.getElementById("aviso").textContent = BANCO[idiomaAtual].res.replace("{0}", acertou);
         }
 
-        embaralharENovasPalavras();
+        embaralharENovas();
     </script>
+
 </body>
 </html>
