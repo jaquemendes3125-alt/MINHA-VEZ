@@ -43,7 +43,6 @@
         select { background-color: #FFE97F; color: #660000; }
         button { background-color: #9B0000; color: #FFE97F; border: none; }
 
-        /* AGORA 5 POR 5, TODAS AS OUTRAS CARACTERÍSTICAS IGUAIS */
         .tabuleiro {
             background-color: #C41E3A;
             border: 6px solid #8B0000;
@@ -229,9 +228,9 @@
         }
 
         const BANCO = {
-            pt: { res: "Encontradas {0} de 3 palavras!", lista: ["CASA", "FLOR", "BOLO", "LUZ", "MAR", "CÉU", "CHÃO", "FRIO", "ÁGUA", "SOL", "LUA", "RIO", "PAZ", "MÃE", "PAI", "VIDA", "DIA", "NOITE", "AZUL", "ROSA", "JOGO", "LIVRO", "MESA", "PORTA", "RUA", "GATO", "CÃO", "PEIXE", "SIM", "NÃO", "BOM", "RUIM", "VERDE", "FESTA", "FRUTA", "PEDRA", "CAMPO", "TRIGO", "FEIJÃO", "MILHO", "ARROZ", "CANJA", "DOCE", "SALTO", "VALE"] },
-            en: { res: "Found {0} of 3 words!", lista: ["TREE", "BALL", "HOME", "LOVE", "CAKE", "SEA", "SKY", "COLD", "HOT", "SUN", "MOON", "ROAD", "PEACE", "MOM", "DAD", "LIFE", "DAY", "NIGHT", "BLUE", "ROSE", "GAME", "BOOK", "TABLE", "DOOR", "CITY", "CAT", "DOG", "FISH", "YES", "NO", "NEW", "OLD", "BIG", "RED", "STONE", "FIELD", "WHEAT", "BEANS", "CORN", "RICE", "SUGAR", "SALT", "HILL", "LAKE"] },
-            es: { res: "Encontradas {0} de 3 palabras!", lista: ["CASA", "FLOR", "PAN", "LUZ", "MAR", "CIELO", "FRÍO", "CALOR", "AGUA", "SOL", "LUNA", "RÍO", "PAZ", "MAMÁ", "PAPÁ", "VIDA", "DÍA", "NOCHE", "AZUL", "ROSA", "JUEGO", "LIBRO", "MESA", "PUERTA", "CIUDAD", "GATO", "PERRO", "PEZ", "SÍ", "NO", "YA", "MAS", "PERO", "POR", "FRUTA", "PIEDRA", "CAMPO", "TRIGO", "FRIJOL", "MAIZ", "ARROZ", "DULCE", "SAL", "MONTE", "VALLE"] }
+            pt: { res: "Encontradas {0} de 3 palavras!", lista: ["OI", "BOI", "CASA", "FLOR", "BOLO", "LUZ", "MAR", "CÉU", "CHÃO", "FRIO", "ÁGUA", "SOL", "LUA", "RIO", "PAZ", "MÃE", "PAI", "VIDA", "DIA", "NOITE", "AZUL", "ROSA", "JOGO", "LIVRO", "MESA", "PORTA", "RUA", "GATO", "CÃO", "PEIXE", "SIM", "NÃO", "BOM", "RUIM", "VERDE", "FESTA", "FRUTA", "PEDRA", "CAMPO", "TRIGO", "FEIJÃO", "MILHO", "ARROZ", "CANJA", "DOCE", "SALTO", "VALE"] },
+            en: { res: "Found {0} of 3 words!", lista: ["HI", "BYE", "TREE", "BALL", "HOME", "LOVE", "CAKE", "SEA", "SKY", "COLD", "HOT", "SUN", "MOON", "ROAD", "PEACE", "MOM", "DAD", "LIFE", "DAY", "NIGHT", "BLUE", "ROSE", "GAME", "BOOK", "TABLE", "DOOR", "CITY", "CAT", "DOG", "FISH", "YES", "NO", "NEW", "OLD", "BIG", "RED", "STONE", "FIELD", "WHEAT", "BEANS", "CORN", "RICE", "SUGAR", "SALT", "HILL", "LAKE"] },
+            es: { res: "Encontradas {0} de 3 palabras!", lista: ["SI", "NO", "CASA", "FLOR", "PAN", "LUZ", "MAR", "CIELO", "FRÍO", "CALOR", "AGUA", "SOL", "LUNA", "RÍO", "PAZ", "MAMÁ", "PAPÁ", "VIDA", "DÍA", "NOCHE", "AZUL", "ROSA", "JUEGO", "LIBRO", "MESA", "PUERTA", "CIUDAD", "GATO", "PERRO", "PEZ", "YA", "MAS", "PERO", "POR", "FRUTA", "PIEDRA", "CAMPO", "TRIGO", "FRIJOL", "MAIZ", "ARROZ", "DULCE", "SAL", "MONTE", "VALLE"] }
         };
 
         function pegarPalavras() {
@@ -287,18 +286,34 @@
         }
 
         function verificar() {
-            const lins = [];
-            for(let i=0;i<5;i++) lins.push(pecas[i*5]+pecas[i*5+1]+pecas[i*5+2]+pecas[i*5+3]+pecas[i*5+4]);
-            const cols = [];
-            for(let i=0;i<5;i++) cols.push(pecas[i]+pecas[i+5]+pecas[i+10]+pecas[i+15]+pecas[i+20]);
-            const todas = [...lins, ...cols, ...lins.map(x=>x.split("").reverse().join("")), ...cols.map(x=>x.split("").reverse().join(""))];
+            let todasSequencias = [];
+
+            // PEGA TODAS AS LINHAS HORIZONTAIS E TODAS AS PARTES DELAS
+            for(let l=0; l<5; l++){
+                let linha = "";
+                for(let c=0; c<5; c++) linha += pecas[l*5 + c] || "";
+                todasSequencias.push(linha);
+                todasSequencias.push(linha.split("").reverse().join(""));
+            }
+
+            // PEGA TODAS AS COLUNAS VERTICAIS E TODAS AS PARTES DELAS
+            for(let c=0; c<5; c++){
+                let coluna = "";
+                for(let l=0; l<5; l++) coluna += pecas[l*5 + c] || "";
+                todasSequencias.push(coluna);
+                todasSequencias.push(coluna.split("").reverse().join(""));
+            }
+
+            // VERIFICA SE A PALAVRA EXISTE EM QUALQUER PARTE DA SEQUÊNCIA
             let acertou = 0;
             palavrasRodada.forEach(p=>{
-                if(todas.includes(p)) {
+                const encontrada = todasSequencias.some(seq => seq.includes(p));
+                if(encontrada){
                     acertou++;
                     document.querySelector(`[data-val="${p}"]`).classList.add("ok");
                 }
             });
+
             document.getElementById("aviso").textContent = BANCO[idiomaAtual].res.replace("{0}", acertou);
         }
 
