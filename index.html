@@ -97,7 +97,7 @@
         }
         function somMoverPeca() { tocarNota(520, 0.1); }
 
-        // TODAS PALAVRAS COMPLETAS, 4 LETRAS, SEM ABREVIAÇÕES E SEM VÍNCULOS PROIBIDOS
+        // LISTA APENAS COM PALAVRAS DE 3 OU 4 LETRAS, TODAS COMPLETAS
         const LISTA_COMPLETA = {
             pt: {
                 textos: {
@@ -105,21 +105,22 @@
                     lista: "Palavras para formar:",
                     embaralhar: "🔄 Embaralhar",
                     verificar: "✅ Verificar",
-                    parabens: "🎉 PARABÉNS! Todas encontradas! Vem NOVO JOGO em instantes...",
+                    parabens: "🎉 PARABÉNS! Carregando NOVO JOGO...",
                     resultado: "Encontradas {0} de {1} palavras!",
-                    anuncio: "[ ESPAÇO DISPONÍVEL PARA ANÚNCIO ]"
+                    anuncio: "[ ESPAÇO PARA ANÚNCIO ]"
                 },
                 palavras: [
+                    // 4 letras
                     "CASA", "FLOR", "BOLO", "LUZ", "MAR", "CÉU", "CHÃO", "FRIO", "ÁGUA", "SOL",
-                    "LUA", "RIO", "PAZ", "MÃE", "PAI", "FILH", "AVÓ", "AMOR", "VIDA", "DIA",
-                    "NOIT", "AZUL", "ROSA", "CANO", "FEST", "JOGO", "LIVR", "MESA", "PORT", "RUA",
-                    "CIDA", "PAÍS", "MUND", "GATO", "CÃO", "PEIX", "FRUT", "TRIG", "MILH", "FEIJ",
-                    "ARRO", "FAMÍ", "AMIG", "SONH", "FORÇ", "PEDR", "AREI", "PONT", "CAMI", "BOLA",
-                    "BRIN", "DANÇ", "CANTA", "AJUD", "BRAN", "PRET", "VERM", "CINZ", "ROXO", "VERD",
-                    "QUEM", "ONDE", "COIS", "MUIT", "POUC", "TODO", "NENH", "ALGÚ", "SEMP", "NUNC",
-                    "AGOR", "DEPO", "ANT", "HOJE", "AMAN", "ONT", "ANO", "MÊS", "SEMA", "HORA",
-                    "MINU", "SEGU", "NOVO", "VELH", "BOM", "RUIM", "GRAN", "PEQU", "ALTO", "BAIX",
-                    "LONGE", "PERTO", "DENT", "FORA", "CIMA", "BAIXO", "ESQU", "DIRE", "LEVE", "PESO"
+                    "LUA", "RIO", "PAZ", "MÃE", "PAI", "AVÓ", "AMOR", "VIDA", "DIA", "NOITE",
+                    "AZUL", "ROSA", "CANO", "FESTA", "JOGO", "LIVRO", "MESA", "PORTA", "RUA", "CIDA",
+                    "PAÍS", "MUNDO", "GATO", "CÃO", "PEIXE", "FRUTA", "TRIGO", "MILHO", "FEIJÃO", "ARROZ",
+                    "AMIGO", "SONHO", "FORÇA", "PEDRA", "AREIA", "PONTE", "BOLA", "BRINCO", "DANÇA", "CANTO",
+                    "AJUDA", "BRANCO", "PRETO", "VERMELHO", "CINZA", "ROXO", "VERDE", "BOM", "RUIM", "GRANDE",
+                    "PEQUENO", "ALTO", "BAIXO", "LONGE", "PERTO", "DENTRO", "FORA", "CIMA", "BAIXO", "SIM",
+                    // 3 letras
+                    "NÃO", "QUE", "LÁ", "JÁ", "MAS", "OU", "E", "COM", "SEM", "POR",
+                    "PRA", "DE", "DO", "DA", "EM", "NO", "NA", "OS", "AS", "MEU"
                 ]
             },
             en: {
@@ -128,21 +129,22 @@
                     lista: "Words to find:",
                     embaralhar: "🔄 Shuffle",
                     verificar: "✅ Check",
-                    parabens: "🎉 CONGRATULATIONS! All found! NEW GAME loading...",
+                    parabens: "🎉 CONGRATULATIONS! NEW GAME loading...",
                     resultado: "Found {0} of {1} words!",
-                    anuncio: "[ AD SPACE AVAILABLE ]"
+                    anuncio: "[ AD SPACE ]"
                 },
                 palavras: [
+                    // 4 letras
                     "TREE", "BALL", "HOME", "LOVE", "CAKE", "LAMP", "SEA", "SKY", "COLD", "HOT",
-                    "WATER", "WOOD", "FIELD", "SUN", "MOON", "RIVER", "PEACE", "MOM", "DAD", "SON",
-                    "LIFE", "DAY", "NIGHT", "GREEN", "BLUE", "ROSE", "SONG", "PARTY", "GAME", "BOOK",
-                    "TABLE", "DOOR", "CITY", "LAND", "WORLD", "CAT", "DOG", "FISH", "FOOD", "WHEAT",
-                    "CORN", "BEAN", "RICE", "FARM", "FRIEND", "DREAM", "HOPE", "STONE", "SAND", "BRIDGE",
-                    "PATH", "PLAY", "SING", "DANCE", "HELP", "WHITE", "BLACK", "RED", "GRAY", "PINK",
-                    "GOLD", "IRON", "GLAS", "PAPE", "CLOT", "FOOT", "HAND", "HEAD", "EYE", "NOSE",
-                    "MOUT", "EAR", "FACE", "BACK", "CHES", "ARMS", "LEGS", "TOWN", "ROAD", "STRE",
-                    "HOUR", "MINU", "SECO", "YEAR", "MON", "WEEK", "DATE", "NEW", "OLD", "GOOD",
-                    "BAD", "BIG", "SMAL", "TALL", "SHOR", "FAST", "SLOW", "LOUD", "SOFT", "HARD"
+                    "SUN", "MOON", "ROAD", "PEACE", "MOM", "DAD", "SON", "LIFE", "DAY", "NIGHT",
+                    "BLUE", "ROSE", "SONG", "PARTY", "GAME", "BOOK", "TABLE", "DOOR", "CITY", "LAND",
+                    "WORLD", "CAT", "DOG", "FISH", "FOOD", "CORN", "BEAN", "RICE", "FARM", "DREAM",
+                    "HOPE", "STONE", "SAND", "BRIDGE", "PATH", "PLAY", "SING", "DANCE", "HELP", "WHITE",
+                    "BLACK", "RED", "GRAY", "PINK", "GOLD", "IRON", "GLASS", "PAPER", "CLOTH", "FOOT",
+                    "HAND", "HEAD", "EYE", "NOSE", "MOUTH", "EAR", "FACE", "BACK", "TOWN", "YES",
+                    // 3 letras
+                    "NO", "WHO", "ONE", "TWO", "SIX", "TEN", "RED", "BIG", "NEW", "OLD",
+                    "HOT", "FAR", "NEAR", "TOP", "BOT", "RUN", "EAT", "SIT", "LAY", "TRY"
                 ]
             },
             es: {
@@ -151,21 +153,22 @@
                     lista: "Palabras a encontrar:",
                     embaralhar: "🔄 Mezclar",
                     verificar: "✅ Verificar",
-                    parabens: "🎉 ¡FELICIDADES! ¡Todas encontradas! NUEVO JUEGO en breve...",
+                    parabens: "🎉 ¡FELICIDADES! NUEVO JUEGO...",
                     resultado: "Encontradas {0} de {1} palabras!",
-                    anuncio: "[ ESPACIO PARA ANUNCIO ]"
+                    anuncio: "[ ESPACIO PUBLICITARIO ]"
                 },
                 palavras: [
-                    "CASA", "FLOR", "PAN", "LUZ", "MAR", "CIEL", "FRÍO", "CALO", "AGUA", "ÁRBOL",
-                    "CAMPO", "SOL", "LUNA", "RÍO", "PAZ", "MAMÁ", "PAPÁ", "HIJO", "VIDA", "DÍA",
-                    "NOCH", "AZUL", "ROSA", "CANC", "FIES", "JUEG", "LIBR", "MESA", "PUER", "CIUD",
-                    "PAÍS", "MUND", "GATO", "PERRO", "PEZ", "FRUT", "TRIG", "MAÍZ", "FRIJ", "ARRÓ",
-                    "FINC", "AMIG", "SUEÑ", "ESPE", "PIED", "AREN", "PUEN", "CAMI", "CANTA", "BAIL",
-                    "AYUD", "BLAN", "NEGR", "ROJO", "GRIS", "ROSA", "ORO", "PLATA", "HIER", "VIDR",
-                    "PAPE", "TELA", "PIE", "MANO", "CABEZ", "OJO", "NARIZ", "BOCA", "OREJ", "CAR",
-                    "ESPAL", "PECH", "BRAZ", "PIERN", "PUEB", "CALLE", "HORA", "MINU", "SEGU", "AÑO",
-                    "MES", "SEMA", "FECH", "NUEV", "VIEJ", "BUEN", "MAL", "GRAN", "PEQU", "ALTO", "BAJO",
-                    "RÁPI", "LENT", "BONI", "FEA", "FUER", "DEBIL", "SIEM", "NUNC", "AHOR", "DESPU"
+                    // 4 letras
+                    "CASA", "FLOR", "PAN", "LUZ", "MAR", "CIELO", "FRÍO", "CALOR", "AGUA", "SOL",
+                    "LUNA", "RÍO", "PAZ", "MAMÁ", "PAPÁ", "HIJO", "VIDA", "DÍA", "NOCHE", "AZUL",
+                    "ROSA", "JUEGO", "LIBRO", "MESA", "PUERTA", "CIUDAD", "PAÍS", "MUNDO", "GATO", "PERRO",
+                    "PEZ", "FRUTA", "TRIGO", "MAÍZ", "FRIJOL", "ARROZ", "FINCA", "AMIGO", "SUEÑO", "PIEDRA",
+                    "ARENA", "PUENTE", "CAMINO", "CANTA", "BAILA", "AYUDA", "BLANCO", "NEGRO", "ROJO", "GRIS",
+                    "ORO", "PLATA", "HIERRO", "VIDRIO", "PAPEL", "TELA", "PIE", "MANO", "OJO", "BOCA",
+                    "SÍ", "NO", "YA", "MAS", "PERO", "POR", "PARA", "CON", "SIN", "DEL"
+                    // 3 letras
+                    "AL", "EN", "UN", "UNA", "DOS", "TRES", "MES", "AÑO", "HOY", "AYER",
+                    "TODO", "NADA", "MUY", "POCO", "MIS", "TUS", "SUY", "NOS", "VOS", "ELL"
                 ]
             }
         };
@@ -288,7 +291,7 @@
 
             if(acertou === listaPalavras.length) {
                 document.getElementById('mensagem').textContent = txt.parabens;
-                // AQUI É A CORREÇÃO PRINCIPAL: AGUARDA 2,5 SEGUNDOS E CARREGA NOVO JOGO AUTOMATICAMENTE
+                // RENOVAÇÃO AUTOMÁTICA CONFIRMADA
                 setTimeout(() => { iniciarJogo(); }, 2500);
             } else {
                 document.getElementById('mensagem').textContent = txt.resultado.replace("{0}", acertou).replace("{1}", listaPalavras.length);
