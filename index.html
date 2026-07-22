@@ -12,33 +12,30 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px 10px;
+            padding: 15px 10px;
         }
-        .cabecalho {
-            width: 310px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
+        /* TÍTULO BEM NO TOPO, CENTRALIZADO */
         h1 {
             font-size: 22px;
             color: #9B1C1C;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
             text-align: center;
-            flex: 1;
+            margin-bottom: 12px;
         }
-        .lado-direito {
+        /* LINHA ABAIXO DO TÍTULO: IDIOMA + SOM */
+        .linha-opcoes {
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
         }
         .idioma {
-            padding: 5px 8px;
+            padding: 6px 10px;
             border: 2px solid #8B7355;
             border-radius: 4px;
             background: #E8DCC3;
-            font-size: 13px;
+            font-size: 14px;
             cursor: pointer;
         }
         .btn-som {
@@ -46,9 +43,9 @@
             color: white;
             border: none;
             border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            font-size: 16px;
+            width: 38px;
+            height: 38px;
+            font-size: 18px;
             cursor: pointer;
         }
         .moldura {
@@ -81,7 +78,6 @@
             color: #212121;
             cursor: pointer;
             user-select: none;
-            transition: 0.15s;
         }
         .peca.vazia {
             background: #A81A1F;
@@ -149,16 +145,17 @@
     </style>
 </head>
 <body>
-    <div class="cabecalho">
-        <h1>✦ MINHA-VEZ VINTAGE ✦</h1>
-        <div class="lado-direito">
-            <select class="idioma" id="selIdioma" onchange="trocarIdioma()">
-                <option value="pt">🇧🇷 PT</option>
-                <option value="en">🇺🇸 EN</option>
-                <option value="es">🇪🇸 ES</option>
-            </select>
-            <button class="btn-som" id="btnSom" onclick="ligarSom()">🔇</button>
-        </div>
+    <!-- TÍTULO BEM NO TOPO -->
+    <h1>✦ MINHA-VEZ VINTAGE ✦</h1>
+
+    <!-- LINHA COM IDIOMA E SOM -->
+    <div class="linha-opcoes">
+        <select class="idioma" id="selIdioma" onchange="trocarIdioma()">
+            <option value="pt">🇧🇷 PT</option>
+            <option value="en">🇺🇸 EN</option>
+            <option value="es">🇪🇸 ES</option>
+        </select>
+        <button class="btn-som" id="btnSom" onclick="ligarSom()">🔇</button>
     </div>
 
     <div class="moldura">
@@ -183,17 +180,15 @@
 
     <script>
         // --------------------------
-        // MÚSICA CRIADA DENTRO DO CÓDIGO — SEM DEPENDER DE NENHUM LINK!
+        // SONS: MÚSICA DE FUNDO + BARULHINHO AO MOVER
         // --------------------------
         let audioCtx;
         let somLigado = false;
-        let botaoSom = document.getElementById('btnSom');
         let nota = 0;
         let loopMusica;
-
         const sequencia = [262, 294, 330, 262, 330, 392, 294, 262, 330, 262, 220, 262, 294, 196, 262];
 
-        function tocarNota(freq) {
+        function tocarNota(freq, duracao = 0.3) {
             if (!audioCtx) return;
             const osc = audioCtx.createOscillator();
             const vol = audioCtx.createGain();
@@ -203,8 +198,8 @@
             osc.frequency.value = freq;
             vol.gain.value = 0.12;
             osc.start();
-            vol.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-            osc.stop(audioCtx.currentTime + 0.35);
+            vol.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duracao);
+            osc.stop(audioCtx.currentTime + duracao + 0.05);
         }
 
         function iniciarMusica() {
@@ -224,17 +219,21 @@
         function ligarSom() {
             if (!somLigado) {
                 iniciarMusica();
-                botaoSom.textContent = "🔊";
+                document.getElementById('btnSom').textContent = "🔊";
                 somLigado = true;
             } else {
                 pararMusica();
-                botaoSom.textContent = "🔇";
+                document.getElementById('btnSom').textContent = "🔇";
                 somLigado = false;
             }
         }
 
+        function somMoverPeca() {
+            tocarNota(520, 0.1);
+        }
+
         // --------------------------
-        // LISTA COM PALAVRAS DE 4/5 LETRAS
+        // RESTO DO JOGO
         // --------------------------
         const LISTA_COMPLETA = {
             pt: {
@@ -275,33 +274,21 @@
             }
         };
 
-        // --------------------------
-        // ANÚNCIO
-        // --------------------------
         const DADOS_ANUNCIO = { texto: "ESPAÇO PARA SEU ANÚNCIO", link: "https://seulink.com.br" };
         document.getElementById('areaAnuncio').textContent = DADOS_ANUNCIO.texto;
         function abrirAnuncio() { if(DADOS_ANUNCIO.link) window.open(DADOS_ANUNCIO.link, '_blank'); }
 
-        // --------------------------
-        // VARIÁVEIS DO JOGO
-        // --------------------------
         let idiomaAtual = "pt";
         let listaPalavras = [];
         let pecas = [];
-        let espacoVazio = 15; // ESPAÇO VAZIO DE VOLTA PARA TROCAR PEÇAS!
+        let espacoVazio = 15;
 
-        // --------------------------
-        // PEGAR 4 NOVAS PALAVRAS
-        // --------------------------
         function pegarNovasPalavras() {
             const todas = LISTA_COMPLETA[idiomaAtual].palavras;
             const embaralhado = [...todas].sort(() => Math.random() - 0.5);
             return embaralhado.slice(0,4);
         }
 
-        // --------------------------
-        // TROCAR IDIOMA
-        // --------------------------
         function trocarIdioma() {
             idiomaAtual = document.getElementById('selIdioma').value;
             const txt = LISTA_COMPLETA[idiomaAtual].textos;
@@ -313,14 +300,11 @@
             iniciarJogo();
         }
 
-        // --------------------------
-        // INICIAR JOGO
-        // --------------------------
         function iniciarJogo() {
             listaPalavras = pegarNovasPalavras();
             pecas = [];
             listaPalavras.forEach(p => pecas.push(...p.split('')));
-            pecas.push(""); // ESPAÇO VAZIO OBRIGATÓRIO
+            pecas.push("");
             embaralhar();
             mostrarPalavras();
         }
@@ -368,6 +352,7 @@
             const mesmaLinha = Math.floor(indiceClicado/4) === Math.floor(espacoVazio/4);
             if ((vizinhos[0] === indiceClicado && !mesmaLinha) || (vizinhos[1] === indiceClicado && !mesmaLinha)) return;
             if(valido) {
+                somMoverPeca();
                 pecas[espacoVazio] = pecas[indiceClicado];
                 pecas[indiceClicado] = "";
                 espacoVazio = indiceClicado;
@@ -395,7 +380,7 @@
                 document.getElementById('mensagem').textContent = txt.parabens;
                 setTimeout(() => iniciarJogo(), 2500);
             } else {
-                document.getElementById('mensagem').textContent = txt.resultado.replace("{0}", acertou).replace("{1}", listaPalavras.length);
+                document.getElementById('mensagem').textContent = txt.resultado.replace("{0}", acertou).replace("{1}", txt.resultado.split("de")[1]);
             }
         }
 
