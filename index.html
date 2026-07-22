@@ -53,17 +53,17 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             margin: 10px 0;
         }
-        /* TAMANHO MAIOR DO TABULEIRO E DAS LETRAS */
+        /* QUADRO 6x6 EXATAMENTE COMO PEDIU */
         .tabuleiro {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: repeat(4, 1fr);
-            gap: 8px;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(6, 1fr);
+            gap: 6px;
             background: #A81A1F;
             padding: 12px;
             border-radius: 6px;
-            width: 360px;
-            height: 360px;
+            width: 420px;
+            height: 420px;
         }
         .peca {
             background: #FFF176;
@@ -72,7 +72,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 34px;
+            font-size: 28px;
             font-weight: bold;
             color: #212121;
             cursor: pointer;
@@ -88,7 +88,7 @@
             padding: 12px;
             border-radius: 6px;
             border: 2px solid #8B7355;
-            width: 360px;
+            width: 420px;
             text-align: center;
             margin-bottom: 12px;
         }
@@ -128,7 +128,7 @@
             margin-bottom: 12px;
         }
         .anuncio {
-            width: 360px;
+            width: 420px;
             height: 60px;
             background: #D4C7A9;
             border: 2px solid #8B7355;
@@ -230,7 +230,7 @@
         }
 
         // --------------------------
-        // LISTA DE PALAVRAS
+        // LISTA DE PALAVRAS ATÉ 6 LETRAS
         // --------------------------
         const LISTA_COMPLETA = {
             pt: {
@@ -243,7 +243,7 @@
                     resultado: "Encontradas {0} de {1} palavras!",
                     anuncio: "[ ESPAÇO DISPONÍVEL PARA ANÚNCIO ]"
                 },
-                palavras: ["MATO","ATAR","CASA","FLOR","BOLO","LUZ","MAR","CÉU","CHÃO","FRIO","QUENTE","ÁGUA","CAMPO","PLANTA","SOL","CHUVA","TERRA","VENTO","LIVRO","MESA","PORTA","RUA","CIDADE","ESTADO","PAÍS","MUNDO","PEIXE","PÁSSARO","GATO","CAVALO","FAZENDA","ESTRELA","LUAR","NUVEM","TRIGO","MILHO","CAFÉ","SOJA","FEIJÃO","ARROZ","FRUTA","VERDE","ESCOLA","AMIGO","IRMÃO","MÃE","PAI","FILHO","AVÓ","TIO","PRIMO","FAMÍLIA","TRABALHO","FÉRIAS","SONHO","FORÇA","PAZ","PEDRA","AREIA","RIO","LAGO","PONTE","CAMINHO","ESTRADA","TRILHA","BOLA","JOGO","BRINCO","CANTA","DANÇA","CONTA","AJUDA","BRANCO","PRETO","AZUL","VERMELHO","ROXO","MARROM","CINZA","LARANJA"]
+                palavras: ["MATO","ATAR","CASA","FLOR","BOLO","LUZ","MAR","CÉU","CHÃO","FRIO","QUENTE","ÁGUA","CAMPO","PLANTA","SOL","CHUVA","TERRA","VENTO","LIVRO","MESA","PORTA","RUA","CIDADE","ESTADO","PAÍS","MUNDO","PEIXE","PÁSSARO","GATO","CAVALO","FAZENDA","ESTRELA","LUAR","NUVEM","TRIGO","MILHO","CAFÉ","SOJA","FEIJÃO","ARROZ","FRUTA","VERDE","ESCOLA","AMIGO","IRMÃO","MÃE","PAI","FILHO","AVÓ","TIO","PRIMO","FAMÍLIA","TRABALHO","FÉRIAS","SONHO","FORÇA","PAZ","PEDRA","AREIA","RIO","LAGO","PONTE","CAMINHO","ESTRADA","TRILHA","BOLA","JOGO","BRINCO","CANTA","DANÇA","CONTA","AJUDA","BRANCO","PRETO","AZUL","VERMELHO","ROXO","MARROM","CINZA","LARANJA","BELEZA","AMOROSO","ESTRELA","FELIZ","VIDA","SORRIR","COMIDA","DINHEIRO","SAUDE","CASA","NOITE","DIA","VERAO","INVERNO","PRIMAVERA","OUTONO"]
             },
             en: {
                 textos: {
@@ -255,7 +255,7 @@
                     resultado: "Found {0} of {1} words!",
                     anuncio: "[ AD SPACE AVAILABLE ]"
                 },
-                palavras: ["TREE","BALL","HOME","LOVE","HOUSE","CAKE","LIGHT","SEA","SKY","COLD","HOT","WATER","WOOD","FIELD","PLANT","SEED","SUN","RAIN","EARTH","WIND","BOOK","TABLE","DOOR","STREET","CITY","STATE","WORLD","FISH","BIRD","DOG","CAT","HORSE","FARM","STAR","MOON","CLOUD","WHEAT","CORN","BEAN","RICE","FRUIT","GREEN","SCHOOL","FRIEND","MOTHER","FATHER","SON","UNCLE","COUSIN","FAMILY","WORK","DREAM","HOPE","PEACE","STONE","SAND","RIVER","LAKE","BRIDGE","PATH","ROAD","PLAY","GAME","SING","DANCE","READ","COUNT","DRAW","HELP","WHITE","BLACK","BLUE","RED","PURPLE","BROWN","GRAY","ORANGE"]
+                palavras: ["TREE","BALL","HOME","LOVE","HOUSE","CAKE","LIGHT","SEA","SKY","COLD","HOT","WATER","WOOD","FIELD","PLANT","SEED","SUN","RAIN","EARTH","WIND","BOOK","TABLE","DOOR","STREET","CITY","STATE","WORLD","FISH","BIRD","DOG","CAT","HORSE","FARM","STAR","MOON","CLOUD","WHEAT","CORN","BEAN","RICE","FRUIT","GREEN","SCHOOL","FRIEND","MOTHER","FATHER","SON","UNCLE","COUSIN","FAMILY","WORK","DREAM","HOPE","PEACE","STONE","SAND","RIVER","LAKE","BRIDGE","PATH","ROAD","PLAY","GAME","SING","DANCE","READ","COUNT","DRAW","HELP","WHITE","BLACK","BLUE","RED","PURPLE","BROWN","GRAY","ORANGE","BEAUTY","HAPPY","LIFE","SMILE","FOOD","MONEY","HEALTH","NIGHT","DAY","SUMMER","WINTER","SPRING","AUTUMN"]
             },
             es: {
                 textos: {
@@ -267,7 +267,7 @@
                     resultado: "Encontradas {0} de {1} palabras!",
                     anuncio: "[ ESPACIO PARA ANUNCIO ]"
                 },
-                palavras: ["MATA","ATAR","CASA","AMOR","FLOR","PAN","LUZ","MAR","CIELO","FRÍO","CALOR","AGUA","ÁRBOL","CAMPO","PLANTA","SEMILLA","SOL","LLUVIA","TIERRA","VIENTO","LIBRO","MESA","PUERTA","CALLE","CIUDAD","ESTADO","PAÍS","MUNDO","PEZ","PÁJARO","PERRO","GATO","CABALLO","GRANJA","ESTRELLA","LUNA","NUBE","TRIGO","MAÍZ","CAFÉ","CAÑA","SOJA","FRIJOL","ARROZ","FRUTA","VERDE","BOSQUE","ESCUELA","AMIGO","HERMANO","MADRE","PADRE","HIJO","TÍO","PRIMO","FAMILIA","TRABAJO","SUEÑO","ESPERANZA","FUERZA","PAZ","PIEDRA","ARENA","RÍO","LAGO","PUENTE","CAMINO","CARRETERA","JUEGO","CANTA","BAILA","LEE","CUENTA","DIBUJA","AYUDA","BLANCO","NEGRO","AZUL","ROJO","MORADO","MARRÓN","GRIS","NARANJA"]
+                palavras: ["MATA","ATAR","CASA","AMOR","FLOR","PAN","LUZ","MAR","CIELO","FRÍO","CALOR","AGUA","ÁRBOL","CAMPO","PLANTA","SEMILLA","SOL","LLUVIA","TIERRA","VIENTO","LIBRO","MESA","PUERTA","CALLE","CIUDAD","ESTADO","PAÍS","MUNDO","PEZ","PÁJARO","PERRO","GATO","CABALLO","GRANJA","ESTRELLA","LUNA","NUBE","TRIGO","MAÍZ","CAFÉ","CAÑA","SOJA","FRIJOL","ARROZ","FRUTA","VERDE","BOSQUE","ESCUELA","AMIGO","HERMANO","MADRE","PADRE","HIJO","TÍO","PRIMO","FAMILIA","TRABAJO","SUEÑO","ESPERANZA","FUERZA","PAZ","PIEDRA","ARENA","RÍO","LAGO","PUENTE","CAMINO","CARRETERA","JUEGO","CANTA","BAILA","LEE","CUENTA","DIBUJA","AYUDA","BLANCO","NEGRO","AZUL","ROJO","MORADO","MARRÓN","GRIS","NARANJA","BELLEZA","FELIZ","VIDA","SONRISA","COMIDA","DINERO","SALUD","NOCHE","DÍA","VERANO","INVIERNO","PRIMAVERA","OTOÑO"]
             }
         };
 
@@ -278,9 +278,8 @@
         let idiomaAtual = "pt";
         let listaPalavras = [];
         let pecas = [];
-        let espacoVazio = 15;
+        let espacoVazio = 35; // Última posição do quadro 6x6
 
-        // AGORA PEGA 3 PALAVRAS AO INVÉS DE 4!
         function pegarNovasPalavras() {
             const todas = LISTA_COMPLETA[idiomaAtual].palavras;
             const embaralhado = [...todas].sort(() => Math.random() - 0.5);
@@ -302,7 +301,7 @@
             listaPalavras = pegarNovasPalavras();
             pecas = [];
             listaPalavras.forEach(p => pecas.push(...p.split('')));
-            pecas.push("");
+            pecas.push(""); // Espaço vazio para mover peças
             embaralhar();
             mostrarPalavras();
         }
@@ -345,9 +344,10 @@
         }
 
         function moverPeca(indiceClicado) {
-            const vizinhos = [espacoVazio -1, espacoVazio +1, espacoVazio -4, espacoVazio +4];
+            // Regras para quadro 6x6
+            const vizinhos = [espacoVazio -1, espacoVazio +1, espacoVazio -6, espacoVazio +6];
             const valido = vizinhos.includes(indiceClicado);
-            const mesmaLinha = Math.floor(indiceClicado/4) === Math.floor(espacoVazio/4);
+            const mesmaLinha = Math.floor(indiceClicado/6) === Math.floor(espacoVazio/6);
             if ((vizinhos[0] === indiceClicado && !mesmaLinha) || (vizinhos[1] === indiceClicado && !mesmaLinha)) return;
             if(valido) {
                 somMoverPeca();
@@ -360,18 +360,16 @@
 
         function verificar() {
             const txt = LISTA_COMPLETA[idiomaAtual].textos;
-            const linhas = [
-                pecas[0]+pecas[1]+pecas[2]+pecas[3],
-                pecas[4]+pecas[5]+pecas[6]+pecas[7],
-                pecas[8]+pecas[9]+pecas[10]+pecas[11],
-                pecas[12]+pecas[13]+pecas[14]+pecas[15]
-            ];
-            const colunas = [
-                pecas[0]+pecas[4]+pecas[8]+pecas[12],
-                pecas[1]+pecas[5]+pecas[9]+pecas[13],
-                pecas[2]+pecas[6]+pecas[10]+pecas[14],
-                pecas[3]+pecas[7]+pecas[11]+pecas[15]
-            ];
+            // Pegar todas as linhas e colunas do quadro 6x6
+            const linhas = [];
+            const colunas = [];
+            for(let i=0; i<6; i++) {
+                linhas.push(pecas[i*6] + pecas[i*6+1] + pecas[i*6+2] + pecas[i*6+3] + pecas[i*6+4] + pecas[i*6+5]);
+            }
+            for(let i=0; i<6; i++) {
+                colunas.push(pecas[i] + pecas[i+6] + pecas[i+12] + pecas[i+18] + pecas[i+24] + pecas[i+30]);
+            }
+            // Aceita normal ou ao contrário
             const todasFormadas = [...linhas, ...colunas, ...linhas.map(p => p.split('').reverse().join('')), ...colunas.map(p => p.split('').reverse().join(''))];
 
             let acertou = 0;
