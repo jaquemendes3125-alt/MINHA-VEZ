@@ -16,7 +16,6 @@
             font-family: Arial, sans-serif;
         }
 
-        /* TÍTULO COM DUAS ESTRELINHAS, EXATAMENTE COMO VOCÊ DISSE */
         h1 {
             color: #9B0000;
             font-size: 30px;
@@ -44,13 +43,13 @@
         select { background-color: #FFE97F; color: #660000; }
         button { background-color: #9B0000; color: #FFE97F; border: none; }
 
-        /* TABULEIRO IGUAL AO BRINQUEDO RACHA-CUCA: VERMELHO, BORDA GROSSA, CAIXAS AMARELAS */
+        /* TABULEIRO SEM NENHUM SOMBREAMENTO, COMO UM QUADRO LIMPO */
         .tabuleiro {
             background-color: #9B0000;
             border: 6px solid #660000;
             border-radius: 12px;
             padding: 22px;
-            box-shadow: 6px 6px 12px rgba(0,0,0,0.35);
+            box-shadow: none;
             display: grid;
             grid-template-columns: repeat(4, 70px);
             grid-template-rows: repeat(4, 70px);
@@ -62,7 +61,7 @@
             background-color: #FFE97F;
             border: 3px solid #CC9900;
             border-radius: 6px;
-            box-shadow: inset 2px 2px 5px rgba(255,255,255,0.7), 2px 2px 4px rgba(0,0,0,0.2);
+            box-shadow: none;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -76,11 +75,9 @@
         .peca.vazia {
             background-color: #9B0000;
             border: 3px dashed #FFE97F;
-            box-shadow: none;
             cursor: default;
         }
 
-        /* LISTA DE PALAVRAS BEM ACABADINHA */
         .lista-palavras {
             background-color: #E8DCC3;
             border: 3px solid #8B7355;
@@ -89,7 +86,7 @@
             width: 330px;
             text-align: center;
             margin-bottom: 18px;
-            box-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+            box-shadow: none;
         }
         .lista-palavras h3 {
             font-size: 18px;
@@ -134,6 +131,7 @@
             justify-content: center;
             font-weight: bold;
             color: #660000;
+            box-shadow: none;
         }
     </style>
 </head>
