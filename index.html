@@ -14,7 +14,6 @@
             align-items: center;
             padding: 15px 10px;
         }
-        /* TÍTULO AGORA MAIOR, BEM DESTACADO */
         h1 {
             font-size: 26px;
             color: #9B1C1C;
@@ -49,21 +48,22 @@
         }
         .moldura {
             background: #C12026;
-            padding: 16px;
+            padding: 20px;
             border-radius: 10px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             margin: 10px 0;
         }
+        /* TAMANHO MAIOR DO TABULEIRO E DAS LETRAS */
         .tabuleiro {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-template-rows: repeat(4, 1fr);
-            gap: 7px;
+            gap: 8px;
             background: #A81A1F;
-            padding: 10px;
+            padding: 12px;
             border-radius: 6px;
-            width: 310px;
-            height: 310px;
+            width: 360px;
+            height: 360px;
         }
         .peca {
             background: #FFF176;
@@ -72,7 +72,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
+            font-size: 34px;
             font-weight: bold;
             color: #212121;
             cursor: pointer;
@@ -85,51 +85,51 @@
         }
         .lista {
             background: #E8DCC3;
-            padding: 10px;
+            padding: 12px;
             border-radius: 6px;
             border: 2px solid #8B7355;
-            width: 310px;
+            width: 360px;
             text-align: center;
             margin-bottom: 12px;
         }
         .lista h3 {
-            font-size: 15px;
+            font-size: 16px;
             color: #3A2E2B;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
         .palavra {
             display: inline-block;
-            margin: 3px 6px;
-            font-size: 14px;
+            margin: 4px 8px;
+            font-size: 15px;
             color: #3A2E2B;
         }
         .palavra.ok { text-decoration: line-through; color: #6D4C41; }
         .botoes {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             justify-content: center;
             margin-bottom: 12px;
         }
         button {
-            padding: 9px 16px;
+            padding: 10px 20px;
             background: #9B1C1C;
             color: white;
             border: none;
             border-radius: 4px;
-            font-size: 14px;
+            font-size: 15px;
             cursor: pointer;
         }
         .msg {
-            font-size: 16px;
+            font-size: 17px;
             font-weight: bold;
             color: #2E7D32;
             text-align: center;
-            min-height: 22px;
+            min-height: 24px;
             margin-bottom: 12px;
         }
         .anuncio {
-            width: 310px;
-            height: 58px;
+            width: 360px;
+            height: 60px;
             background: #D4C7A9;
             border: 2px solid #8B7355;
             border-radius: 3px;
@@ -137,7 +137,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 14px;
             text-align: center;
             padding: 5px;
         }
@@ -239,11 +239,11 @@
                     lista: "Palavras para formar:",
                     embaralhar: "🔄 Embaralhar",
                     verificar: "✅ Verificar",
-                    parabens: "🎉 PARABÉNS! Todas encontradas! Vem mais 4 novas!",
+                    parabens: "🎉 PARABÉNS! Todas encontradas! Vem mais 3 novas!",
                     resultado: "Encontradas {0} de {1} palavras!",
                     anuncio: "[ ESPAÇO DISPONÍVEL PARA ANÚNCIO ]"
                 },
-                palavras: ["MATO","ATAR","CUCA","AMO","CASA","FLOR","BOLO","LUZ","MAR","CÉU","CHÃO","FRIO","QUENTE","ÁGUA","CAMPO","PLANTA","SOL","CHUVA","TERRA","VENTO","LIVRO","MESA","PORTA","RUA","CIDADE","ESTADO","PAÍS","MUNDO","PEIXE","PÁSSARO","GATO","CAVALO","FAZENDA","ESTRELA","LUAR","NUVEM","TRIGO","MILHO","CAFÉ","CANE","SOJA","FEIJÃO","ARROZ","FRUTA","VERDE","ESCOLA","AMIGO","IRMÃO","MÃE","PAI","FILHO","AVÓ","TIO","PRIMO","FAMÍLIA","TRABALHO","FÉRIAS","SONHO","FORÇA","PAZ","PEDRA","AREIA","RIO","LAGO","PONTE","CAMINHO","ESTRADA","TRILHA","BOLA","JOGO","BRINCO","CANTA","DANÇA","CONTA","AJUDA","BRANCO","PRETO","AZUL","VERMELHO","ROXO","MARROM","CINZA","LARANJA"]
+                palavras: ["MATO","ATAR","CASA","FLOR","BOLO","LUZ","MAR","CÉU","CHÃO","FRIO","QUENTE","ÁGUA","CAMPO","PLANTA","SOL","CHUVA","TERRA","VENTO","LIVRO","MESA","PORTA","RUA","CIDADE","ESTADO","PAÍS","MUNDO","PEIXE","PÁSSARO","GATO","CAVALO","FAZENDA","ESTRELA","LUAR","NUVEM","TRIGO","MILHO","CAFÉ","SOJA","FEIJÃO","ARROZ","FRUTA","VERDE","ESCOLA","AMIGO","IRMÃO","MÃE","PAI","FILHO","AVÓ","TIO","PRIMO","FAMÍLIA","TRABALHO","FÉRIAS","SONHO","FORÇA","PAZ","PEDRA","AREIA","RIO","LAGO","PONTE","CAMINHO","ESTRADA","TRILHA","BOLA","JOGO","BRINCO","CANTA","DANÇA","CONTA","AJUDA","BRANCO","PRETO","AZUL","VERMELHO","ROXO","MARROM","CINZA","LARANJA"]
             },
             en: {
                 textos: {
@@ -251,7 +251,7 @@
                     lista: "Words to find:",
                     embaralhar: "🔄 Shuffle",
                     verificar: "✅ Check",
-                    parabens: "🎉 CONGRATULATIONS! All found! 4 new ones coming!",
+                    parabens: "🎉 CONGRATULATIONS! All found! 3 new ones coming!",
                     resultado: "Found {0} of {1} words!",
                     anuncio: "[ AD SPACE AVAILABLE ]"
                 },
@@ -263,7 +263,7 @@
                     lista: "Palabras a encontrar:",
                     embaralhar: "🔄 Mezclar",
                     verificar: "✅ Verificar",
-                    parabens: "🎉 ¡FELICIDADES! ¡Todas encontradas! ¡Vienen 4 nuevas!",
+                    parabens: "🎉 ¡FELICIDADES! ¡Todas encontradas! ¡Vienen 3 nuevas!",
                     resultado: "Encontradas {0} de {1} palabras!",
                     anuncio: "[ ESPACIO PARA ANUNCIO ]"
                 },
@@ -280,10 +280,11 @@
         let pecas = [];
         let espacoVazio = 15;
 
+        // AGORA PEGA 3 PALAVRAS AO INVÉS DE 4!
         function pegarNovasPalavras() {
             const todas = LISTA_COMPLETA[idiomaAtual].palavras;
             const embaralhado = [...todas].sort(() => Math.random() - 0.5);
-            return embaralhado.slice(0,4);
+            return embaralhado.slice(0,3);
         }
 
         function trocarIdioma() {
@@ -359,7 +360,6 @@
 
         function verificar() {
             const txt = LISTA_COMPLETA[idiomaAtual].textos;
-            // ACEITA PALAVRAS NAS 4 LINHAS E 4 COLUNAS, NORMAL OU AO CONTRÁRIO
             const linhas = [
                 pecas[0]+pecas[1]+pecas[2]+pecas[3],
                 pecas[4]+pecas[5]+pecas[6]+pecas[7],
@@ -384,7 +384,6 @@
 
             if(acertou === listaPalavras.length) {
                 document.getElementById('mensagem').textContent = txt.parabens;
-                // TROCA AUTOMÁTICA POR NOVAS PALAVRAS!
                 setTimeout(() => iniciarJogo(), 2500);
             } else {
                 document.getElementById('mensagem').textContent = txt.resultado.replace("{0}", acertou).replace("{1}", listaPalavras.length);
