@@ -43,10 +43,10 @@
         select { background-color: #FFE97F; color: #660000; }
         button { background-color: #9B0000; color: #FFE97F; border: none; }
 
-        /* TABULEIRO: BASE UM POUCO MAIOR, QUADRADOS MAIS PRÓXIMOS, SEM SOMBRA */
+        /* VERMELHO MAIS CLARO, SEM SOMBRA, BASE MAIOR EMBAIXO */
         .tabuleiro {
-            background-color: #9B0000;
-            border: 6px solid #660000;
+            background-color: #C41E3A;
+            border: 6px solid #8B0000;
             border-radius: 12px;
             padding: 18px 18px 24px 18px;
             box-shadow: none;
@@ -72,9 +72,10 @@
             cursor: pointer;
             user-select: none;
         }
+        /* SEM PONTILHADO NO ESPAÇO VAZIO */
         .peca.vazia {
-            background-color: #9B0000;
-            border: 3px dashed #FFE97F;
+            background-color: #C41E3A;
+            border: none;
             cursor: default;
         }
 
@@ -156,7 +157,7 @@
     </div>
 
     <div class="botoes">
-        <button onclick="embaralharENovas()">🔄 Embaralhar & Novas Palavras</button>
+        <button onclick="embaralharENovas()">🔄 Embaralhar</button>
         <button onclick="verificar()">✅ Verificar</button>
     </div>
 
@@ -174,8 +175,6 @@
         let loopMusica;
         let notaMusica = 0;
         const TOTAL = 16;
-
-        // Melodia estilo jogo antigo anos 80/90
         const melodia = [262, 294, 330, 262, 330, 392, 294, 262, 330, 262, 220, 262, 294, 196, 262];
 
         function iniciarAudio() {
