@@ -5,203 +5,172 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MINHA-VEZ VINTAGE</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial Black, Gadget, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
         body { background: #F4EBD0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px; }
-        h1 { color: #9B1C1C; margin-bottom: 15px; font-size: 26px; }
-        .controles { display: flex; gap: 15px; margin-bottom: 15px; align-items: center; }
-        select, button { padding: 8px 12px; font-size: 14px; border-radius: 4px; border: 2px solid #8B7355; cursor: pointer; }
+        h1 { color: #9B1C1C; margin-bottom: 15px; font-size: 26px; text-align: center; }
+        .botoes-topo { display: flex; gap: 15px; margin-bottom: 15px; }
+        select, button { padding: 8px 12px; font-size: 15px; border-radius: 4px; border: 2px solid #8B7355; cursor: pointer; }
         button { background: #9B1C1C; color: white; border: none; }
         .tabuleiro { display: grid; grid-template-columns: repeat(4, 70px); grid-template-rows: repeat(4, 70px); gap: 8px; background: #A81A1F; padding: 15px; border-radius: 8px; margin: 15px 0; }
         .peca { background: #FFF176; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: bold; border-radius: 4px; cursor: pointer; user-select: none; }
         .peca.vazia { background: #A81A1F; border: 2px dashed #8B161B; cursor: default; }
         .lista { background: #E8DCC3; padding: 15px; border-radius: 4px; width: 330px; text-align: center; margin-bottom: 15px; }
-        .lista h3 { font-size: 16px; margin-bottom: 8px; color: #3A2E2B; }
-        .palavra { margin: 5px 8px; font-size: 16px; display: inline-block; color: #3A2E2B; }
-        .palavra.ok { text-decoration: line-through; color: #6D4C41; }
-        .botoes { display: flex; gap: 12px; margin-bottom: 12px; }
-        .msg { font-size: 18px; font-weight: bold; color: #2E7D32; margin: 10px 0; min-height: 24px; }
+        .lista h3 { font-size: 17px; margin-bottom: 10px; }
+        .palavra { margin: 5px 10px; font-size: 18px; display: inline-block; }
+        .palavra.ok { text-decoration: line-through; color: #2E7D32; font-weight: bold; }
+        .botoes-acoes { display: flex; gap: 15px; margin-bottom: 10px; }
+        .mensagem { font-size: 19px; font-weight: bold; color: #2E7D32; margin: 10px 0; min-height: 25px; }
         .anuncio { width: 330px; height: 60px; background: #D4C7A9; border: 2px solid #8B7355; border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-top: 10px; font-size: 14px; }
     </style>
 </head>
 <body>
-    <h1>✦ MINHA-VEZ VINTAGE ✦</h1>
+    <h1>MINHA-VEZ VINTAGE</h1>
 
-    <div class="controles">
-        <select id="selIdioma" onchange="trocarIdioma()">
-            <option value="pt">🇧🇷 PT</option>
-            <option value="en">🇺🇸 EN</option>
-            <option value="es">🇪🇸 ES</option>
+    <div class="botoes-topo">
+        <select id="idioma" onchange="mudarIdioma()">
+            <option value="pt">Português</option>
+            <option value="en">Inglês</option>
+            <option value="es">Espanhol</option>
         </select>
-        <button id="btnSom" onclick="ligarSom()">🔇 Som</button>
+        <button id="botaoSom" onclick="ligarSom()">🔇 Som</button>
     </div>
 
     <div class="tabuleiro" id="tabuleiro"></div>
 
     <div class="lista">
         <h3>Palavras para formar:</h3>
-        <div id="palavras"></div>
+        <div id="palavrasLista"></div>
     </div>
 
-    <div class="botoes">
+    <div class="botoes-acoes">
         <button onclick="embaralhar()">🔄 Embaralhar</button>
         <button onclick="verificar()">✅ Verificar</button>
     </div>
 
-    <div class="msg" id="mensagem"></div>
+    <div class="mensagem" id="mensagem"></div>
 
     <div class="anuncio">
         [ ESPAÇO PARA ANÚNCIO ]
     </div>
 
     <script>
-        let audioCtx;
-        let somLigado = false;
-        let nota = 0;
-        let loopMusica;
-        const sequencia = [262, 294, 330, 262, 330, 392, 294, 262, 330, 262, 220, 262, 294, 196, 262];
+        let somAtivo = false;
+        let audioContexto;
+        let espacoVazio = 15;
+        let pecas = [];
+        let palavrasRodada = [];
+        let idiomaAtual = "pt";
+        const TOTAL_CASAS = 16;
 
-        function tocarNota(freq, duracao = 0.3) {
-            if (!audioCtx) return;
-            const osc = audioCtx.createOscillator();
-            const vol = audioCtx.createGain();
-            osc.connect(vol); vol.connect(audioCtx.destination);
-            osc.type = 'square'; osc.frequency.value = freq;
-            vol.gain.value = 0.12; osc.start();
-            vol.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duracao);
-            osc.stop(audioCtx.currentTime + duracao + 0.05);
-        }
-
-        function iniciarMusica() {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-            loopMusica = setInterval(() => { tocarNota(sequencia[nota]); nota++; if (nota >= sequencia.length) nota = 0; }, 320);
-        }
-        function pararMusica() { clearInterval(loopMusica); }
-        function ligarSom() {
-            if (!somLigado) { iniciarMusica(); document.getElementById('btnSom').textContent = "🔊 Som"; somLigado = true; }
-            else { pararMusica(); document.getElementById('btnSom').textContent = "🔇 Som"; somLigado = false; }
-        }
-        function somMoverPeca() { tocarNota(520, 0.1); }
-
-        const LISTA_COMPLETA = {
+        const BANCO_PALAVRAS = {
             pt: {
-                parabens: "🎉 PARABÉNS! Novo jogo em instantes...",
-                resultado: "Encontradas {0} de {1} palavras!",
-                palavras: [
-                    "CASA", "FLOR", "BOLO", "LUZ", "MAR", "CÉU", "CHÃO", "FRIO", "ÁGUA", "SOL",
-                    "LUA", "RIO", "PAZ", "MÃE", "PAI", "AVÓ", "AMOR", "VIDA", "DIA", "NOITE",
-                    "AZUL", "ROSA", "CANO", "FESTA", "JOGO", "LIVRO", "MESA", "PORTA", "RUA", "CIDA",
-                    "PAÍS", "MUNDO", "GATO", "CÃO", "PEIXE", "FRUTA", "TRIGO", "MILHO", "FEIJÃO", "ARROZ",
-                    "SIM", "NÃO", "QUE", "LÁ", "JÁ", "MAS", "OU", "COM", "SEM", "POR"
-                ]
+                parabens: "🎉 PARABÉNS! Novo jogo já vem...",
+                resultado: "Encontradas {0} de 3 palavras!",
+                lista: ["CASA", "FLOR", "BOLO", "LUZ", "MAR", "CÉU", "CHÃO", "FRIO", "ÁGUA", "SOL", "LUA", "RIO", "PAZ", "MÃE", "PAI", "VIDA", "DIA", "NOITE", "AZUL", "ROSA", "JOGO", "LIVRO", "MESA", "PORTA", "RUA", "GATO", "CÃO", "PEIXE", "SIM", "NÃO", "BOM", "RUIM", "VERDE", "FESTA"]
             },
             en: {
                 parabens: "🎉 CONGRATULATIONS! New game coming...",
-                resultado: "Found {0} of {1} words!",
-                palavras: [
-                    "TREE", "BALL", "HOME", "LOVE", "CAKE", "LAMP", "SEA", "SKY", "COLD", "HOT",
-                    "SUN", "MOON", "ROAD", "PEACE", "MOM", "DAD", "SON", "LIFE", "DAY", "NIGHT",
-                    "BLUE", "ROSE", "SONG", "PARTY", "GAME", "BOOK", "TABLE", "DOOR", "CITY", "LAND",
-                    "WORLD", "CAT", "DOG", "FISH", "FOOD", "CORN", "BEAN", "RICE", "FARM", "DREAM",
-                    "YES", "NO", "WHO", "ONE", "TWO", "NEW", "OLD", "BIG", "RED", "HOT"
-                ]
+                resultado: "Found {0} of 3 words!",
+                lista: ["TREE", "BALL", "HOME", "LOVE", "CAKE", "SEA", "SKY", "COLD", "HOT", "SUN", "MOON", "ROAD", "PEACE", "MOM", "DAD", "LIFE", "DAY", "NIGHT", "BLUE", "ROSE", "GAME", "BOOK", "TABLE", "DOOR", "CITY", "CAT", "DOG", "FISH", "YES", "NO", "NEW", "OLD", "BIG", "RED"]
             },
             es: {
-                parabens: "🎉 ¡FELICIDADES! Nuevo juego en breve...",
-                resultado: "Encontradas {0} de {1} palabras!",
-                palavras: [
-                    "CASA", "FLOR", "PAN", "LUZ", "MAR", "CIELO", "FRÍO", "CALOR", "AGUA", "SOL",
-                    "LUNA", "RÍO", "PAZ", "MAMÁ", "PAPÁ", "HIJO", "VIDA", "DÍA", "NOCHE", "AZUL",
-                    "ROSA", "JUEGO", "LIBRO", "MESA", "PUERTA", "CIUDAD", "PAÍS", "MUNDO", "GATO", "PERRO",
-                    "PEZ", "FRUTA", "TRIGO", "MAÍZ", "FRIJOL", "ARROZ", "FINCA", "AMIGO", "SUEÑO", "PIEDRA",
-                    "SÍ", "NO", "YA", "MAS", "PERO", "POR", "PARA", "CON", "SIN", "DEL"
-                ]
+                parabens: "🎉 ¡FELICIDADES! Nuevo juego listo...",
+                resultado: "Encontradas {0} de 3 palabras!",
+                lista: ["CASA", "FLOR", "PAN", "LUZ", "MAR", "CIELO", "FRÍO", "CALOR", "AGUA", "SOL", "LUNA", "RÍO", "PAZ", "MAMÁ", "PAPÁ", "VIDA", "DÍA", "NOCHE", "AZUL", "ROSA", "JUEGO", "LIBRO", "MESA", "PUERTA", "CIUDAD", "GATO", "PERRO", "PEZ", "SÍ", "NO", "YA", "MAS", "PERO", "POR"]
             }
         };
 
-        let idiomaAtual = "pt";
-        let listaPalavras = [];
-        let pecas = [];
-        const TOTAL_CASAS = 16;
-        let espacoVazio = 15;
-
-        function pegarNovasPalavras() {
-            const todas = LISTA_COMPLETA[idiomaAtual].palavras;
-            const embaralhado = [...todas].sort(() => Math.random() - 0.5);
-            return embaralhado.slice(0,3);
+        function tocarSom() {
+            if(!audioContexto) audioContexto = new (window.AudioContext || window.webkitAudioContext)();
+            const nota = audioContexto.createOscillator();
+            const volume = audioContexto.createGain();
+            nota.connect(volume);
+            volume.connect(audioContexto.destination);
+            nota.frequency.value = 520;
+            nota.type = "square";
+            volume.gain.value = 0.1;
+            nota.start();
+            nota.stop(audioContexto.currentTime + 0.15);
         }
 
-        function trocarIdioma() {
-            idiomaAtual = document.getElementById('selIdioma').value;
+        function ligarSom() {
+            somAtivo = !somAtivo;
+            document.getElementById("botaoSom").textContent = somAtivo ? "🔊 Som" : "🔇 Som";
+        }
+
+        function mudarIdioma() {
+            idiomaAtual = document.getElementById("idioma").value;
             iniciarJogo();
         }
 
+        function pegarPalavrasNovas() {
+            const todas = [...BANCO_PALAVRAS[idiomaAtual].lista];
+            const selecionadas = [];
+            for(let i=0; i<3; i++) {
+                const indice = Math.floor(Math.random() * todas.length);
+                selecionadas.push(todas.splice(indice, 1)[0]);
+            }
+            return selecionadas;
+        }
+
         function iniciarJogo() {
-            listaPalavras = pegarNovasPalavras();
+            palavrasRodada = pegarPalavrasNovas();
             pecas = [];
-            listaPalavras.forEach(p => pecas.push(...p.trim().split('')));
-            const letrasExtras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
+            palavrasRodada.forEach(p => pecas.push(...p.split('')));
+            const letrasExtras = "ABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚÂÊÔÃÕÇ";
             while(pecas.length < TOTAL_CASAS - 1) {
                 pecas.push(letrasExtras[Math.floor(Math.random() * letrasExtras.length)]);
             }
             pecas.push("");
-            embaralhar();
-            mostrarPalavras();
+            embaralharPecas();
+            mostrarPalavrasNaTela();
+            document.getElementById("mensagem").textContent = "";
         }
 
-        function mostrarPalavras() {
-            const area = document.getElementById('palavras');
-            area.innerHTML = "";
-            listaPalavras.forEach(palavra => {
-                const el = document.createElement('span');
-                el.className = 'palavra';
-                el.textContent = palavra.trim();
-                el.dataset.valor = palavra.trim();
-                area.appendChild(el);
-            });
-        }
-
-        function embaralhar() {
-            for (let i = pecas.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                if (pecas[i] !== "" && pecas[j] !== "") {
-                    [pecas[i], pecas[j]] = [pecas[j], pecas[i]];
-                }
+        function embaralharPecas() {
+            for(let i=pecas.length-1; i>0; i--) {
+                const j = Math.floor(Math.random() * (i+1));
+                if(pecas[i] !== "" && pecas[j] !== "") [pecas[i], pecas[j]] = [pecas[j], pecas[i]];
             }
             espacoVazio = pecas.indexOf("");
             desenharTabuleiro();
-            document.getElementById('mensagem').textContent = "";
-            document.querySelectorAll('.palavra').forEach(p => p.classList.remove('ok'));
         }
 
         function desenharTabuleiro() {
-            const tab = document.getElementById('tabuleiro');
-            tab.innerHTML = "";
+            const tabuleiro = document.getElementById("tabuleiro");
+            tabuleiro.innerHTML = "";
             pecas.forEach((letra, indice) => {
-                const quadro = document.createElement('div');
+                const quadro = document.createElement("div");
                 quadro.className = letra === "" ? "peca vazia" : "peca";
                 quadro.textContent = letra;
                 quadro.onclick = () => moverPeca(indice);
-                tab.appendChild(quadro);
+                tabuleiro.appendChild(quadro);
             });
         }
 
-        function moverPeca(indiceClicado) {
+        function moverPeca(indice) {
             const vizinhos = [espacoVazio -1, espacoVazio +1, espacoVazio -4, espacoVazio +4];
-            const valido = vizinhos.includes(indiceClicado);
-            const mesmaLinha = Math.floor(indiceClicado/4) === Math.floor(espacoVazio/4);
-            if ((vizinhos[0] === indiceClicado && !mesmaLinha) || (vizinhos[1] === indiceClicado && !mesmaLinha)) return;
-            if(valido) {
-                somMoverPeca();
-                pecas[espacoVazio] = pecas[indiceClicado];
-                pecas[indiceClicado] = "";
-                espacoVazio = indiceClicado;
-                desenharTabuleiro();
-            }
+            if(!vizinhos.includes(indice)) return;
+            if(somAtivo) tocarSom();
+            pecas[espacoVazio] = pecas[indice];
+            pecas[indice] = "";
+            espacoVazio = indice;
+            desenharTabuleiro();
+        }
+
+        function mostrarPalavrasNaTela() {
+            const lista = document.getElementById("palavrasLista");
+            lista.innerHTML = "";
+            palavrasRodada.forEach(p => {
+                const item = document.createElement("span");
+                item.className = "palavra";
+                item.textContent = p;
+                item.dataset.valor = p;
+                lista.appendChild(item);
+            });
         }
 
         function verificar() {
-            const txt = LISTA_COMPLETA[idiomaAtual];
             const linhas = [
                 pecas[0]+pecas[1]+pecas[2]+pecas[3],
                 pecas[4]+pecas[5]+pecas[6]+pecas[7],
@@ -214,22 +183,25 @@
                 pecas[2]+pecas[6]+pecas[10]+pecas[14],
                 pecas[3]+pecas[7]+pecas[11]+pecas[15]
             ];
-            const todasFormadas = [...linhas, ...colunas, ...linhas.map(p => p.split('').reverse().join('')), ...colunas.map(p => p.split('').reverse().join(''))];
+            const todasOcorrencias = [
+                ...linhas, ...colunas,
+                ...linhas.map(l => l.split('').reverse().join('')),
+                ...colunas.map(c => c.split('').reverse().join(''))
+            ];
 
             let acertou = 0;
-            listaPalavras.forEach(palavra => {
-                const limpa = palavra.trim();
-                if(todasFormadas.includes(limpa)) {
+            palavrasRodada.forEach(palavra => {
+                if(todasOcorrencias.includes(palavra)) {
                     acertou++;
-                    document.querySelector(`.palavra[data-valor="${limpa}"]`).classList.add('ok');
+                    document.querySelector(`[data-valor="${palavra}"]`).classList.add("ok");
                 }
             });
 
-            if(acertou === listaPalavras.length) {
-                document.getElementById('mensagem').textContent = txt.parabens;
-                setTimeout(() => { iniciarJogo(); }, 2500);
+            if(acertou === 3) {
+                document.getElementById("mensagem").textContent = BANCO_PALAVRAS[idiomaAtual].parabens;
+                setTimeout(() => iniciarJogo(), 1000);
             } else {
-                document.getElementById('mensagem').textContent = txt.resultado.replace("{0}", acertou).replace("{1}", listaPalavras.length);
+                document.getElementById("mensagem").textContent = BANCO_PALAVRAS[idiomaAtual].resultado.replace("{0}", acertou);
             }
         }
 
