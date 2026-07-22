@@ -43,7 +43,7 @@
     </div>
 
     <div class="botoes-acoes">
-        <button onclick="embaralhar()">🔄 Embaralhar</button>
+        <button onclick="embaralharErenovar()">🔄 Embaralhar e Novas Palavras</button>
         <button onclick="verificar()">✅ Verificar</button>
     </div>
 
@@ -64,17 +64,14 @@
 
         const BANCO_PALAVRAS = {
             pt: {
-                parabens: "🎉 PARABÉNS! Novo jogo já vem...",
                 resultado: "Encontradas {0} de 3 palavras!",
                 lista: ["CASA", "FLOR", "BOLO", "LUZ", "MAR", "CÉU", "CHÃO", "FRIO", "ÁGUA", "SOL", "LUA", "RIO", "PAZ", "MÃE", "PAI", "VIDA", "DIA", "NOITE", "AZUL", "ROSA", "JOGO", "LIVRO", "MESA", "PORTA", "RUA", "GATO", "CÃO", "PEIXE", "SIM", "NÃO", "BOM", "RUIM", "VERDE", "FESTA"]
             },
             en: {
-                parabens: "🎉 CONGRATULATIONS! New game coming...",
                 resultado: "Found {0} of 3 words!",
                 lista: ["TREE", "BALL", "HOME", "LOVE", "CAKE", "SEA", "SKY", "COLD", "HOT", "SUN", "MOON", "ROAD", "PEACE", "MOM", "DAD", "LIFE", "DAY", "NIGHT", "BLUE", "ROSE", "GAME", "BOOK", "TABLE", "DOOR", "CITY", "CAT", "DOG", "FISH", "YES", "NO", "NEW", "OLD", "BIG", "RED"]
             },
             es: {
-                parabens: "🎉 ¡FELICIDADES! Nuevo juego listo...",
                 resultado: "Encontradas {0} de 3 palabras!",
                 lista: ["CASA", "FLOR", "PAN", "LUZ", "MAR", "CIELO", "FRÍO", "CALOR", "AGUA", "SOL", "LUNA", "RÍO", "PAZ", "MAMÁ", "PAPÁ", "VIDA", "DÍA", "NOCHE", "AZUL", "ROSA", "JUEGO", "LIBRO", "MESA", "PUERTA", "CIUDAD", "GATO", "PERRO", "PEZ", "SÍ", "NO", "YA", "MAS", "PERO", "POR"]
             }
@@ -100,7 +97,7 @@
 
         function mudarIdioma() {
             idiomaAtual = document.getElementById("idioma").value;
-            iniciarJogo();
+            embaralharErenovar();
         }
 
         function pegarPalavrasNovas() {
@@ -111,20 +108,6 @@
                 selecionadas.push(todas.splice(indice, 1)[0]);
             }
             return selecionadas;
-        }
-
-        function iniciarJogo() {
-            palavrasRodada = pegarPalavrasNovas();
-            pecas = [];
-            palavrasRodada.forEach(p => pecas.push(...p.split('')));
-            const letrasExtras = "ABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚÂÊÔÃÕÇ";
-            while(pecas.length < TOTAL_CASAS - 1) {
-                pecas.push(letrasExtras[Math.floor(Math.random() * letrasExtras.length)]);
-            }
-            pecas.push("");
-            embaralharPecas();
-            mostrarPalavrasNaTela();
-            document.getElementById("mensagem").textContent = "";
         }
 
         function embaralharPecas() {
@@ -170,6 +153,26 @@
             });
         }
 
+        // FUNÇÃO EXATA COMO VOCÊ PEDIU:
+        function embaralharErenovar() {
+            // Pega 3 palavras NOVAS
+            palavrasRodada = pegarPalavrasNovas();
+            // Monta as letras das novas palavras + letras extras
+            pecas = [];
+            palavrasRodada.forEach(p => pecas.push(...p.split('')));
+            const letrasExtras = "ABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚÂÊÔÃÕÇ";
+            while(pecas.length < TOTAL_CASAS - 1) {
+                pecas.push(letrasExtras[Math.floor(Math.random() * letrasExtras.length)]);
+            }
+            pecas.push("");
+            // Embaralha tudo
+            embaralharPecas();
+            // Mostra as 3 palavras NOVAS
+            mostrarPalavrasNaTela();
+            // Limpa a mensagem
+            document.getElementById("mensagem").textContent = "";
+        }
+
         function verificar() {
             const linhas = [
                 pecas[0]+pecas[1]+pecas[2]+pecas[3],
@@ -197,15 +200,11 @@
                 }
             });
 
-            if(acertou === 3) {
-                document.getElementById("mensagem").textContent = BANCO_PALAVRAS[idiomaAtual].parabens;
-                setTimeout(() => iniciarJogo(), 1000);
-            } else {
-                document.getElementById("mensagem").textContent = BANCO_PALAVRAS[idiomaAtual].resultado.replace("{0}", acertou);
-            }
+            document.getElementById("mensagem").textContent = BANCO_PALAVRAS[idiomaAtual].resultado.replace("{0}", acertou);
         }
 
-        iniciarJogo();
+        // Inicia o primeiro jogo
+        embaralharErenovar();
     </script>
 </body>
 </html>
