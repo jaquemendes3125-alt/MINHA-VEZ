@@ -43,7 +43,7 @@
         select { background-color: #FFE97F; color: #660000; }
         button { background-color: #9B0000; color: #FFE97F; border: none; }
 
-        /* VERMELHO MAIS CLARO, SEM SOMBRA, BASE MAIOR EMBAIXO */
+        /* AGORA 5 POR 5, TODAS AS OUTRAS CARACTERÍSTICAS IGUAIS */
         .tabuleiro {
             background-color: #C41E3A;
             border: 6px solid #8B0000;
@@ -51,8 +51,8 @@
             padding: 18px 18px 24px 18px;
             box-shadow: none;
             display: grid;
-            grid-template-columns: repeat(4, 70px);
-            grid-template-rows: repeat(4, 70px);
+            grid-template-columns: repeat(5, 62px);
+            grid-template-rows: repeat(5, 62px);
             gap: 6px;
             margin-bottom: 20px;
         }
@@ -66,13 +66,12 @@
             align-items: center;
             justify-content: center;
             font-family: 'Arial Black', sans-serif;
-            font-size: 34px;
+            font-size: 30px;
             color: #000000;
             font-weight: 900;
             cursor: pointer;
             user-select: none;
         }
-        /* SEM PONTILHADO NO ESPAÇO VAZIO */
         .peca.vazia {
             background-color: #C41E3A;
             border: none;
@@ -84,7 +83,7 @@
             border: 3px solid #8B7355;
             border-radius: 8px;
             padding: 18px;
-            width: 330px;
+            width: 360px;
             text-align: center;
             margin-bottom: 18px;
             box-shadow: none;
@@ -122,7 +121,7 @@
         }
 
         .anuncio {
-            width: 330px;
+            width: 360px;
             height: 65px;
             background-color: #D4C7A9;
             border: 3px solid #8B7355;
@@ -168,13 +167,13 @@
     <script>
         let somAtivo = false;
         let audioContexto;
-        let espacoVazio = 15;
+        let espacoVazio = 24;
         let pecas = [];
         let palavrasRodada = [];
         let idiomaAtual = "pt";
         let loopMusica;
         let notaMusica = 0;
-        const TOTAL = 16;
+        const TOTAL = 25;
         const melodia = [262, 294, 330, 262, 330, 392, 294, 262, 330, 262, 220, 262, 294, 196, 262];
 
         function iniciarAudio() {
@@ -230,9 +229,9 @@
         }
 
         const BANCO = {
-            pt: { res: "Encontradas {0} de 3 palavras!", lista: ["CASA", "FLOR", "BOLO", "LUZ", "MAR", "CÉU", "CHÃO", "FRIO", "ÁGUA", "SOL", "LUA", "RIO", "PAZ", "MÃE", "PAI", "VIDA", "DIA", "NOITE", "AZUL", "ROSA", "JOGO", "LIVRO", "MESA", "PORTA", "RUA", "GATO", "CÃO", "PEIXE", "SIM", "NÃO", "BOM", "RUIM", "VERDE", "FESTA"] },
-            en: { res: "Found {0} of 3 words!", lista: ["TREE", "BALL", "HOME", "LOVE", "CAKE", "SEA", "SKY", "COLD", "HOT", "SUN", "MOON", "ROAD", "PEACE", "MOM", "DAD", "LIFE", "DAY", "NIGHT", "BLUE", "ROSE", "GAME", "BOOK", "TABLE", "DOOR", "CITY", "CAT", "DOG", "FISH", "YES", "NO", "NEW", "OLD", "BIG", "RED"] },
-            es: { res: "Encontradas {0} de 3 palabras!", lista: ["CASA", "FLOR", "PAN", "LUZ", "MAR", "CIELO", "FRÍO", "CALOR", "AGUA", "SOL", "LUNA", "RÍO", "PAZ", "MAMÁ", "PAPÁ", "VIDA", "DÍA", "NOCHE", "AZUL", "ROSA", "JUEGO", "LIBRO", "MESA", "PUERTA", "CIUDAD", "GATO", "PERRO", "PEZ", "SÍ", "NO", "YA", "MAS", "PERO", "POR"] }
+            pt: { res: "Encontradas {0} de 3 palavras!", lista: ["CASA", "FLOR", "BOLO", "LUZ", "MAR", "CÉU", "CHÃO", "FRIO", "ÁGUA", "SOL", "LUA", "RIO", "PAZ", "MÃE", "PAI", "VIDA", "DIA", "NOITE", "AZUL", "ROSA", "JOGO", "LIVRO", "MESA", "PORTA", "RUA", "GATO", "CÃO", "PEIXE", "SIM", "NÃO", "BOM", "RUIM", "VERDE", "FESTA", "FRUTA", "PEDRA", "CAMPO", "TRIGO", "FEIJÃO", "MILHO", "ARROZ", "CANJA", "DOCE", "SALTO", "VALE"] },
+            en: { res: "Found {0} of 3 words!", lista: ["TREE", "BALL", "HOME", "LOVE", "CAKE", "SEA", "SKY", "COLD", "HOT", "SUN", "MOON", "ROAD", "PEACE", "MOM", "DAD", "LIFE", "DAY", "NIGHT", "BLUE", "ROSE", "GAME", "BOOK", "TABLE", "DOOR", "CITY", "CAT", "DOG", "FISH", "YES", "NO", "NEW", "OLD", "BIG", "RED", "STONE", "FIELD", "WHEAT", "BEANS", "CORN", "RICE", "SUGAR", "SALT", "HILL", "LAKE"] },
+            es: { res: "Encontradas {0} de 3 palabras!", lista: ["CASA", "FLOR", "PAN", "LUZ", "MAR", "CIELO", "FRÍO", "CALOR", "AGUA", "SOL", "LUNA", "RÍO", "PAZ", "MAMÁ", "PAPÁ", "VIDA", "DÍA", "NOCHE", "AZUL", "ROSA", "JUEGO", "LIBRO", "MESA", "PUERTA", "CIUDAD", "GATO", "PERRO", "PEZ", "SÍ", "NO", "YA", "MAS", "PERO", "POR", "FRUTA", "PIEDRA", "CAMPO", "TRIGO", "FRIJOL", "MAIZ", "ARROZ", "DULCE", "SAL", "MONTE", "VALLE"] }
         };
 
         function pegarPalavras() {
@@ -254,7 +253,7 @@
         }
 
         function mover(i) {
-            const v = [espacoVazio-1, espacoVazio+1, espacoVazio-4, espacoVazio+4];
+            const v = [espacoVazio-1, espacoVazio+1, espacoVazio-5, espacoVazio+5];
             if(!v.includes(i)) return;
             if(somAtivo) tocarSomMovimento();
             pecas[espacoVazio] = pecas[i]; pecas[i] = ""; espacoVazio = i;
@@ -288,8 +287,10 @@
         }
 
         function verificar() {
-            const lins = [pecas[0]+pecas[1]+pecas[2]+pecas[3], pecas[4]+pecas[5]+pecas[6]+pecas[7], pecas[8]+pecas[9]+pecas[10]+pecas[11], pecas[12]+pecas[13]+pecas[14]+pecas[15]];
-            const cols = [pecas[0]+pecas[4]+pecas[8]+pecas[12], pecas[1]+pecas[5]+pecas[9]+pecas[13], pecas[2]+pecas[6]+pecas[10]+pecas[14], pecas[3]+pecas[7]+pecas[11]+pecas[15]];
+            const lins = [];
+            for(let i=0;i<5;i++) lins.push(pecas[i*5]+pecas[i*5+1]+pecas[i*5+2]+pecas[i*5+3]+pecas[i*5+4]);
+            const cols = [];
+            for(let i=0;i<5;i++) cols.push(pecas[i]+pecas[i+5]+pecas[i+10]+pecas[i+15]+pecas[i+20]);
             const todas = [...lins, ...cols, ...lins.map(x=>x.split("").reverse().join("")), ...cols.map(x=>x.split("").reverse().join(""))];
             let acertou = 0;
             palavrasRodada.forEach(p=>{
